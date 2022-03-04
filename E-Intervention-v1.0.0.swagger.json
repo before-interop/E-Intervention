@@ -1,406 +1,1199 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "Spécification des ressources qui devront être exposées par les différents acteurs impliqués par le protocole E-Intervention.",
-    "version": "1.0.0",
-    "title": "E-Intervention"
-  },
-  "host": "serverRoot",
-  "basePath": "/v1",
-  "tags": [
-    {
-      "name": "client",
-      "description": "Opérations liées aux clients"
-    },
-    {
-      "name": "intervention",
-      "description": "Opérations liées aux interventions"
-    }
-  ],
-  "schemes": [
-    "https"
-  ],
-  "paths": {
-    "/clientHS_OC": {
-      "post": {
-        "tags": [
-          "client"
-        ],
-        "summary": "Flux 3 - Flux de déclaration des lignes impactées des OC vers l’OI (facultatif)",
-        "description": "Opération permettant à l'opérateur commercial de déclarer des clients HS auprès de l'OI",
-        "operationId": "notifierClientsHS_OC",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Liste des clients coupés lors d'une intervention donnée pour un opérateur commercial donné",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/clientHS_OCParInter"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Référence refIntervOI inconnue"
-          },
-          "405": {
-            "description": "Validation exception"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "api_auth": [
-              "write:clients"
-            ]
-          }
-        ]
-      }
-    },
-    "/intervention_DO": {
-      "post": {
-        "tags": [
-          "intervention"
-        ],
-        "summary": "Flux 1 - Flux de déclaration d’intervention du DO vers l’OI",
-        "description": "Opération permettant au DO de créer et mettre à jour une intervention chez l’OI",
-        "operationId": "declarerInterventionDO",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Objet intervention à déclarer chez l'OI",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/interventionDO"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/refIntervOI"
-            }
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "405": {
-            "description": "Validation exception"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "api_auth": [
-              "write:interventions"
-            ]
-          }
-        ]
-      }
-    },
-    "/intervention_OI": {
-      "post": {
-        "tags": [
-          "intervention"
-        ],
-        "summary": "Flux 2 - Flux de déclaration d’intervention de l’OI vers les OC présents sur le PM",
-        "description": "Opération permettant à l'OI de créer et mettre à jour une intervention chez l’OC",
-        "operationId": "declarerInterventionOI",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Objet intervention à déclarer chez l'OC",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/interventionOI"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "405": {
-            "description": "Validation exception"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "api_auth": [
-              "write:interventions"
-            ]
-          }
-        ]
-      }
-    }
-  },
-  "securityDefinitions": {
-    "api_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://serverRoot/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:clients": "Ecrire des infos clients",
-        "write:interventions": "Ecrire des infos interventions"
-      }
-    }
-  },
-  "definitions": {
-    "clientHS_OCParInter": {
-      "type": "object",
-      "required": [
-        "codeOC",
-        "refIntervOI"
-      ],
-      "properties": {
-        "codeOC": {
-          "type": "string",
-          "maxLength": 4
-        },
-        "refIntervOI": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "tabClientHS": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/clientHSOC"
-          }
-        }
-      },
-      "xml": {
-        "name": "clientHS_OCParInter"
-      }
-    },
-    "clientHSOC": {
-      "type": "object",
-      "required": [
-        "PTO",
-        "PBO",
-        "tube",
-        "fibre",
-        "positionPM_ModuleOI"
-      ],
-      "properties": {
-        "PTO": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "PBO": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "tube": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "fibre": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "positionPM_ModuleOI": {
-          "type": "string",
-          "maxLength": 100
-        }
-      },
-      "xml": {
-        "name": "clientHSOC"
-      }
-    },
-    "interventionDO": {
-      "type": "object",
-      "required": [
-        "codeDO",
-        "codeOI",
-        "refIntervDO",
-        "PM",
-        "tabNaturePBOPTO",
-        "debutInter"
-      ],
-      "properties": {
-        "codeDO": {
-          "type": "string",
-          "maxLength": 4
-        },
-        "codeOI": {
-          "type": "string",
-          "maxLength": 4
-        },
-        "refIntervDO": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "PM": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "tabNaturePBOPTO": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/naturePBOPTO"
-          }
-        },
-        "debutInter": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "finInter": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "xml": {
-        "name": "interventionDO"
-      }
-    },
-    "interventionOI": {
-      "type": "object",
-      "required": [
-        "codeOI",
-        "refIntervOI",
-        "PM",
-        "debutInter"
-      ],
-      "properties": {
-        "codeOI": {
-          "type": "string",
-          "maxLength": 4
-        },
-        "refIntervOI": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "PM": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "tabPBO": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PBO"
-          }
-        },
-        "debutInter": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "finInter": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "xml": {
-        "name": "interventionOI"
-      }
-    },
-    "naturePBOPTO": {
-      "type": "object",
-      "required": [
-        "nature"
-      ],
-      "properties": {
-        "nature": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "PBO": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "PTO": {
-          "type": "string",
-          "maxLength": 50
-        }
-      },
-      "xml": {
-        "name": "naturePBOPTO"
-      }
-    },
-    "PBO": {
-      "type": "object",
-      "properties": {
-        "PBO": {
-          "type": "string",
-          "maxLength": 50
-        }
-      },
-      "xml": {
-        "name": "PBO"
-      }
-    },
-    "refIntervOI": {
-      "type": "object",
-      "required": [
-        "refIntervOI"
-      ],
-      "properties": {
-        "refIntervOI": {
-          "type": "string",
-          "maxLength": 50
-        }
-      }
-    }
-  },
-  "externalDocs": {
-    "description": "Groupe Interop'Fibre",
-    "url": "https://www.interop-fibre.fr/"
-  }
+	"openapi": "3.0.2",
+	"servers": [
+		{
+			"url": "/v1",
+			"description": "Serveur de production"
+		}
+	],
+	"paths": {
+		"/interventions-OI/{refIntervOI}/acces-oc-hs": {
+			"post": {
+				"tags": [
+					"declarerAccesOCHorsService_OI"
+				],
+				"summary": "Opération permettant à l'opérateur commercial de déclarer des acces HS auprès de l'OI",
+				"operationId": "declarerAccesOCHorsService_OI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"declarerAccesOCHorsService_OI_auth": [
+						]
+					}
+				],
+				"parameters": [
+					{
+						"name": "trackerId",
+						"required": false,
+						"description": "Navigation Unique Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-request-id",
+						"required": false,
+						"description": "Request Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-source",
+						"required": false,
+						"description": "Consumer application name",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 64
+						}
+					},
+					{
+						"name": "refIntervOI",
+						"required": true,
+						"description": "Référence d’intervention unique produite par l’OI",
+						"in": "path",
+						"schema": {
+							"maxLength": 50,
+							"minLength": 1,
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeclarerAccesOCHorsServiceIn"
+							}
+						}
+					},
+					"description": "",
+					"required": true
+				},
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeclarerAccesOCHorsService_OI400Response"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeclarerAccesOCHorsService_OI401Response"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "An Error occurred on the server side",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeclarerAccesOCHorsService_OI500Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "DONNEES_DE_TRAFIC",
+				"x-security-out": "DONNEES_DE_TRAFIC"
+			}
+		},
+		"/interventions-oi": {
+			"post": {
+				"tags": [
+					"creerInterventionOI"
+				],
+				"summary": "Opération permettant au DO de créer une intervention chez l’OI",
+				"operationId": "creerInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"creerInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+					{
+						"name": "trackerId",
+						"required": false,
+						"description": "Navigation Unique Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-request-id",
+						"required": false,
+						"description": "Request Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-source",
+						"required": false,
+						"description": "Consumer application name",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InterventionOI"
+							}
+						}
+					},
+					"description": "",
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOI400Response"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOI401Response"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "An Error occurred on the server side",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOI500Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "DONNEES_DE_TRAFIC",
+				"x-security-out": "DONNEES_DE_TRAFIC"
+			}
+		},
+		"/interventions-oi/notification": {
+			"post": {
+				"tags": [
+					"notifierInterventionOI"
+				],
+				"summary": "Opération permettant à l'OI de notifier l'OC d' une intervention chez l’OC",
+				"operationId": "notifierInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"notifierInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+					{
+						"name": "trackerId",
+						"required": false,
+						"description": "Navigation Unique Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-request-id",
+						"required": false,
+						"description": "Request Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-source",
+						"required": false,
+						"description": "Consumer application name",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/NotifierInterventionOIIn"
+							}
+						}
+					},
+					"description": "",
+					"required": true
+				},
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierInterventionOI400Response"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierInterventionOI401Response"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "An Error occurred on the server side",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierInterventionOI500Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "DONNEES_DE_TRAFIC",
+				"x-security-out": "DONNEES_DE_TRAFIC"
+			}
+		},
+		"/interventions-oi/{refIntervOI}": {
+			"put": {
+				"tags": [
+					"modifierInterventionOI"
+				],
+				"summary": "Opération permettant au DO de  mettre à jour une intervention chez l’OI",
+				"operationId": "modifierInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"modifierInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+					{
+						"name": "trackerId",
+						"required": false,
+						"description": "Navigation Unique Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-request-id",
+						"required": false,
+						"description": "Request Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-source",
+						"required": false,
+						"description": "Consumer application name",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 64
+						}
+					},
+					{
+						"name": "refIntervOI",
+						"required": true,
+						"description": "",
+						"in": "path",
+						"schema": {
+							"maxLength": 50,
+							"minLength": 1,
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InterventionOI1"
+							}
+						}
+					},
+					"description": "",
+					"required": true
+				},
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOI400Response"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOI401Response"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "An Error occurred on the server side",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOI500Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "DONNEES_DE_TRAFIC",
+				"x-security-out": "DONNEES_DE_TRAFIC"
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"creerInterventionOI_auth": {
+				"type": "oauth2",
+				"flows": {
+					"clientCredentials": {
+						"tokenUrl": "https://oauth2.bouyguestelecom.fr/token",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"declarerAccesOCHorsService_OI_auth": {
+				"type": "oauth2",
+				"flows": {
+					"clientCredentials": {
+						"tokenUrl": "https://oauth2.bouyguestelecom.fr/token",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"modifierInterventionOI_auth": {
+				"type": "oauth2",
+				"flows": {
+					"clientCredentials": {
+						"tokenUrl": "https://oauth2.bouyguestelecom.fr/token",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"notifierInterventionOI_auth": {
+				"type": "oauth2",
+				"flows": {
+					"clientCredentials": {
+						"tokenUrl": "https://oauth2.bouyguestelecom.fr/token",
+						"scopes": {
+						}
+					}
+				}
+			}
+		},
+		"schemas": {
+			"AccesOC": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"PBO",
+					"PTO",
+					"fibre",
+					"positionPM_ModuleOI",
+					"tube"
+				],
+				"properties": {
+					"PBO": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"PTO": {
+						"description": "PTO",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionPM_ModuleOI": {
+						"description": "",
+						"maxLength": 100,
+						"minLength": 1,
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CreerInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"refInteventionOI"
+				],
+				"properties": {
+					"refInteventionOI": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"DeclarerAccesOCHorsServiceIn": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOC"
+				],
+				"properties": {
+					"codeOC": {
+						"description": "Code opérateur Interop de celui ayant des clients impactés",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"listeAccesOCHorsService": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/AccesOC"
+						}
+					}
+				}
+			},
+			"InterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"PM",
+					"codeDO",
+					"codeOI",
+					"dateDebutIntevention",
+					"dateFinIntevention",
+					"listeNaturePBOPTO",
+					"natureIntervention",
+					"refIntervDO"
+				],
+				"properties": {
+					"PM": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"codeDO": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"codeOI": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"dateDebutIntevention": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateFinIntevention": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"listeNaturePBOPTO": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/NaturePBOPTO"
+						}
+					},
+					"natureIntervention": {
+						"description": "",
+						"type": "string"
+					},
+					"refIntervDO": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"InterventionOI1": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"PM",
+					"codeDO",
+					"codeOI",
+					"dateDebutIntevention",
+					"dateFinIntevention",
+					"listeNaturePBOPTO",
+					"natureIntervention",
+					"refIntervDO"
+				],
+				"properties": {
+					"PM": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"codeDO": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"codeOI": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"dateDebutIntevention": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateFinIntevention": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"listeNaturePBOPTO": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/NaturePBOPTO1"
+						}
+					},
+					"natureIntervention": {
+						"description": "",
+						"type": "string"
+					},
+					"refIntervDO": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"NaturePBOPTO": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"nature"
+				],
+				"properties": {
+					"nature": {
+						"description": "",
+						"type": "string"
+					},
+					"referencePBO": {
+						"description": "",
+						"type": "string"
+					},
+					"referencePTO": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"NaturePBOPTO1": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"nature"
+				],
+				"properties": {
+					"PBO": {
+						"description": "",
+						"type": "string"
+					},
+					"PTO": {
+						"description": "",
+						"type": "string"
+					},
+					"nature": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"NotifierInterventionOIIn": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"PBO",
+					"PM",
+					"codeOI",
+					"dateDebutIntevention",
+					"dateFinIntevention",
+					"refIntervOI"
+				],
+				"properties": {
+					"PBO": {
+						"description": "Référence du PBO (Ex : PTXXXXXXX)sii fourni par le DO",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"PM": {
+						"description": "Référence réglementaire du PM (Ex : FI-XXXXX-XXXX)",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"codeOI": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"dateDebutIntevention": {
+						"description": "Date/heure de début réel d’intervention (norme RFC3339)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateFinIntevention": {
+						"description": "Date/heure de fin réel d’intervention, valorisé à NULL si M2 ( suite création intervention)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"refIntervOI": {
+						"description": "Référence d’intervention unique produite par l’OI",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CreerInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CODE_OI_INCONNU",
+							"INVALID_FORMAT"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"CreerInterventionOI401Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"UNAUTHORIZED"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"CreerInterventionOI500Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INTERNAL_SERVER_ERROR"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"DeclarerAccesOCHorsService_OI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INVALID_FORMAT",
+							"REFINTERVENTION_OI_INCONNUE"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"DeclarerAccesOCHorsService_OI401Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"UNAUTHORIZED"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"DeclarerAccesOCHorsService_OI500Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INTERNAL_SERVER_ERROR"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"ModifierInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CODE_OI_INCONNU",
+							"INVALID_FORMAT"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"ModifierInterventionOI401Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"UNAUTHORIZED"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"ModifierInterventionOI500Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INTERNAL_SERVER_ERROR"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"NotifierInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INVALID_FORMAT"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"NotifierInterventionOI401Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"UNAUTHORIZED"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"NotifierInterventionOI500Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"INTERNAL_SERVER_ERROR"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"x-st": "INTEROP",
+		"title": "INTERVENTION",
+		"version": "1.0.20",
+		"description": "",
+		"contact": {
+			"name": "INTEROP"
+		}
+	},
+	"tags": [
+		{
+			"name": "creerInterventionOI",
+			"description": "Opération permettant au DO de créer une intervention chez l’OI"
+		},
+		{
+			"name": "modifierInterventionOI",
+			"description": "Opération permettant au DO de  mettre à jour une intervention chez l’OI"
+		},
+		{
+			"name": "notifierInterventionOI",
+			"description": "Opération permettant à l'OI de notifier l'OC d' une intervention chez l’OC"
+		},
+		{
+			"name": "declarerAccesOCHorsService_OI",
+			"description": "Opération permettant à l'opérateur commercial de déclarer des acces HS auprès de l'OI"
+		}
+	]
 }
