@@ -450,6 +450,11 @@
             "MAUVAIS_FORMAT",
             "REF_INTERV_OI_INCONNUE"
           ]
+        },
+        "Description_Reponse": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Description de l'erreur"
         }
       }
     },
@@ -482,6 +487,11 @@
             "PM_INCONNU"
           ]
         },
+        "Description_Reponse": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Description de l'erreur"
+        },
         "Ref_Interv_OI": {
           "type": "string",
           "maxLength": 50,
@@ -506,6 +516,11 @@
             3
           ],
           "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n"
+        },
+        "Description_Reponse": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Description de l'erreur"
         },
         "Libelle_Reponse": {
           "type": "string",
