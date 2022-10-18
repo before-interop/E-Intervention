@@ -435,16 +435,18 @@
           "type": "integer",
           "format": "int32",
           "enum": [
+            -1,
             0,
             1,
             2,
             3
           ],
-          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE\n"
+          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE\n-1 si erreur inconnue"
         },
         "Libelle_Reponse": {
           "type": "string",
           "enum": [
+            "UNREFERENCED_ERROR",
             "OK",
             "CHAMPS_NON_RENSEIGNE",
             "MAUVAIS_FORMAT",
@@ -464,17 +466,19 @@
           "type": "integer",
           "format": "int32",
           "enum": [
+            -1,
             0,
             1,
             2,
             3,
             4
           ],
-          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n"
+          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n-1 si erreur inconnue"
         },
         "Libelle_Reponse": {
           "type": "string",
           "enum": [
+            "UNREFERENCED_ERROR",
             "OK",
             "CHAMPS_NON_RENSEIGNE",
             "MAUVAIS_FORMAT",
@@ -500,16 +504,18 @@
           "type": "integer",
           "format": "int32",
           "enum": [
+            -1,
             0,
             1,
             2,
             3
           ],
-          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n"
+          "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n-1 si erreur inconnue"
         },
         "Libelle_Reponse": {
           "type": "string",
           "enum": [
+            "UNREFERENCED_ERROR",
             "OK",
             "CHAMPS_NON_RENSEIGNE",
             "MAUVAIS_FORMAT",
