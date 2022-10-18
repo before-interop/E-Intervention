@@ -503,7 +503,8 @@
             0,
             1,
             2,
-            3
+            3,
+            4
           ],
           "description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU\n"
         },
