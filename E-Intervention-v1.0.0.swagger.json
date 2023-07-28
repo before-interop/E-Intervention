@@ -272,7 +272,7 @@
         },
         "PBO": {
           "type": "string",
-          "maxLength": 50
+          "maxLength": 100
         },
         "Tube": {
           "type": "string",
@@ -405,7 +405,7 @@
         },
         "PBO": {
           "type": "string",
-          "maxLength": 50,
+          "maxLength": 100,
           "description": "Référence PBO (Ex: PTXXXXXXX) si disponible\n"
         },
         "PTO": {
@@ -420,7 +420,7 @@
       "properties": {
         "PBO": {
           "type": "string",
-          "maxLength": 50,
+          "maxLength": 100,
           "description": "Référence du PBO (ex: PTXXXXXXX) si fourni par le DO\n"
         }
       }
