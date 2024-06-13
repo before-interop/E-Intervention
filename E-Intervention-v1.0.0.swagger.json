@@ -397,11 +397,9 @@
             1,
             2,
             3,
-            4,
-            5,
-            6
+            4           
           ],
-          "description": "Nature finale de l'intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l'information)\n"
+          "description": "Nature finale de l'intervention, valeurs possibles : 1 = RACC 2 = SAV 3 = AUCUNE ACTION 4 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l'information)\n"        
         },
         "PBO": {
           "type": "string",
