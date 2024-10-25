@@ -1,0 +1,367 @@
+{
+	"openapi": "3.0.2",
+	"servers": [
+		{
+			"url": "https://partner.api.bouyguestelecom.fr/v1",
+			"description": "Racine d'url des API PARTENAIRE en PRODUCTION"
+		}
+	],
+	"paths": {
+		"/interventions-oi/notification-impacte-clients-oc": {
+			"post": {
+				"tags": [
+					"notifierImpacteClientsOC"
+				],
+				"summary": "permet de mettre à jour le document dont l'id est fourni.",
+				"operationId": "notifierImpacteClientsOC",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"notifierImpacteClientsOC_auth": [
+						]
+					}
+				],
+				"parameters": [
+					{
+						"name": "trackerId",
+						"required": false,
+						"description": "Navigation Unique Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-request-id",
+						"required": false,
+						"description": "Request Identifier",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 36
+						}
+					},
+					{
+						"name": "x-source",
+						"required": false,
+						"description": "Consumer application name",
+						"in": "header",
+						"schema": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ClientImpacteOCParIntervention"
+							}
+						}
+					},
+					"description": "Liste des clients coupés lors d'une intervention donnée pour un opérateur commercial donné",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ClientImpacteParInterventionOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"notifierImpacteClientsOC_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			}
+		},
+		"schemas": {
+			"ClientHSOC": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"hmsCoupure",
+					"positionModulePM",
+					"refPTO"
+				],
+				"properties": {
+					"couleurJarretiere": {
+						"description": "",
+						"type": "string"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"hmsCoupure": {
+						"description": "Date/heure de début de coupure pour le client (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"nomModulePM": {
+						"description": "",
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"type": "string"
+					},
+					"positionCoupleurOC": {
+						"description": "",
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"ClientImpacteOCParIntervention": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOcImpacte",
+					"message",
+					"multiIntervention",
+					"nombreOC",
+					"referenceIntervOI",
+					"reparationCodeOC",
+					"testCloture"
+				],
+				"properties": {
+					"clientHSOC": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ClientHSOC"
+						}
+					},
+					"codeOcImpacte": {
+						"description": "Code opérateur Interop de celui ayant des clients impactés",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"demandeReapartion": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/DemandeReapartion"
+						}
+					},
+					"ligneClientRetablie": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/LigneClientRetablie"
+						}
+					},
+					"message": {
+						"description": "",
+						"type": "string"
+					},
+					"multiIntervention": {
+						"description": "",
+						"type": "boolean"
+					},
+					"nombreOC": {
+						"description": "",
+						"type": "integer",
+						"format": "int32"
+					},
+					"numeroTest": {
+						"description": "",
+						"type": "string"
+					},
+					"referenceIntervOI": {
+						"description": "Référence d�??intervention unique produite par l'OI",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"reparationCodeOC": {
+						"description": "",
+						"type": "string"
+					},
+					"reparationOCDemande": {
+						"description": "",
+						"type": "boolean"
+					},
+					"testCloture": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"ClientImpacteParInterventionOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"libelle",
+					"numeroTest",
+					"referenceIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE",
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"libelle": {
+						"description": "",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"MAUVAIS_FORMAT",
+							"OK",
+							"REF_INTERV_OI_INCONNUE"
+						]
+					},
+					"numeroTest": {
+						"description": "",
+						"type": "string"
+					},
+					"referenceIntervOI": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"DemandeReapartion": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeDO"
+				],
+				"properties": {
+					"codeDO": {
+						"description": "",
+						"type": "string"
+					},
+					"reparation": {
+						"description": "",
+						"default": false,
+						"type": "boolean"
+					}
+				}
+			},
+			"LigneClientRetablie": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"hmsRetablissement",
+					"positionModulePM",
+					"refPTO"
+				],
+				"properties": {
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"hmsRetablissement": {
+						"description": "Date/heure de début de coupure pour le client (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"nomModulePm": {
+						"description": "",
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"x-objetmetier": "INTERVENTION-OI",
+		"x-sf": "",
+		"x-st": "MSF",
+		"x-type": "partenaire",
+		"x-execution": "api",
+		"x-role": "consumer",
+		"title": "INTERVENTION-OI-notifierImpacteClientsOC",
+		"version": "1.0.249",
+		"description": "",
+		"contact": {
+			"name": "MOE MSF"
+		}
+	},
+	"tags": [
+		{
+			"name": "notifierImpacteClientsOC",
+			"description": "permet de mettre à jour le document dont l'id est fourni."
+		}
+	]
+}

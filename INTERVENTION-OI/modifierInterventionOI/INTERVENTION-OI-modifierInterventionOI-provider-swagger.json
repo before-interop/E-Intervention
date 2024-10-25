@@ -1,0 +1,208 @@
+{
+	"openapi": "3.0.2",
+	"servers": [
+		{
+			"url": "https://partner.api.bouyguestelecom.fr/v1",
+			"description": "Racine d'url des API PARTENAIRE en PRODUCTION"
+		}
+	],
+	"paths": {
+		"/interventions-oi": {
+			"put": {
+				"tags": [
+					"modifierInterventionOI"
+				],
+				"summary": "permet de mettre à jour le document dont l'id est fourni.",
+				"operationId": "modifierInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"modifierInterventionOI_auth": [
+							"EXT_InterventionOiManage"
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ModifierInterventionOI"
+							}
+						}
+					},
+					"description": "Objet intervention à déclarer chez l'OC",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"modifierInterventionOI_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+							"EXT_InterventionOiManage": ""
+						}
+					}
+				}
+			}
+		},
+		"schemas": {
+			"ModifierInterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOI",
+					"dateDebutIntevention",
+					"message",
+					"refIntervOI"
+				],
+				"properties": {
+					"codeOI": {
+						"description": "Code opérateur Interop de l'opérateur d'infrastructure",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"dateDebutIntevention": {
+						"description": "Date/heure de début réel d'intervention (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateFinIntervention": {
+						"description": "Valeur NULL si M2 Date/heure de fin réel d'intervention si M4 (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"description": "",
+						"type": "string"
+					},
+					"elementReseau": {
+						"description": "",
+						"type": "string"
+					},
+					"message": {
+						"description": "",
+						"type": "string"
+					},
+					"pointMutualisation": {
+						"$ref": "#/components/schemas/PointMutualisation"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l�??OI dans R M1/R M3",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"ModifierInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"libelle",
+					"refInterventionOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU",
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"libelle": {
+						"description": "",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"CODE_OI_INCONNU",
+							"INCOHERENCE",
+							"MAUVAIS_FORMAT",
+							"OK",
+							"PM_INCONNU"
+						]
+					},
+					"refInterventionOI": {
+						"description": "",
+						"type": "string"
+					}
+				}
+			},
+			"PointMutualisation": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"refPM"
+				],
+				"properties": {
+					"pointMutualisationTechnique": {
+						"$ref": "#/components/schemas/PointMutualisationTechnique"
+					},
+					"refPM": {
+						"description": "Référence réglementaire du PM (ex: FI-XXXXX-XXXX)",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"PointMutualisationTechnique": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"refPMTechnique"
+				],
+				"properties": {
+					"refPMTechnique": {
+						"description": "C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.",
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"x-objetmetier": "INTERVENTION-OI",
+		"x-sf": "",
+		"x-st": "MSF",
+		"x-type": "partenaire",
+		"x-execution": "api",
+		"x-role": "provider",
+		"title": "INTERVENTION-OI-modifierInterventionOI",
+		"version": "1.0.249",
+		"description": "",
+		"contact": {
+			"name": "MOE MSF"
+		}
+	},
+	"tags": [
+		{
+			"name": "modifierInterventionOI",
+			"description": "permet de mettre à jour le document dont l'id est fourni."
+		}
+	]
+}
