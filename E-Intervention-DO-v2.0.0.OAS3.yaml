@@ -1,0 +1,689 @@
+openapi: 3.0.2
+servers:
+  - url: https://{serverRoot}/v2
+    variables:
+      serverRoot:
+        default: serverRoot
+paths:
+  /interventions-do:
+    post:
+      tags:
+        - creerInterventionDO
+      summary: ''
+      operationId: creerInterventionDO
+      x-secured-access: strict
+      security:
+        - creerInterventionDO_auth: []
+      parameters:
+        - name: trackerId
+          required: false
+          description: Navigation Unique Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-request-id
+          required: false
+          description: Request Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-source
+          required: false
+          description: Consumer application name
+          in: header
+          schema:
+            type: string
+            maxLength: 64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreerInterventionDO'
+        description: Objet intervention à déclarer chez l'OI
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreerInterventionDOOut'
+          description: Operation Successful
+      x-security-in: IDENTITE_ET_GESTION
+      x-security-out: IDENTITE_ET_GESTION
+    put:
+      tags:
+        - modifierInterventionDO
+      summary: ''
+      operationId: modifierInterventionDO
+      x-secured-access: none
+      parameters:
+        - name: trackerId
+          required: false
+          description: Navigation Unique Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-request-id
+          required: false
+          description: Request Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-source
+          required: false
+          description: Consumer application name
+          in: header
+          schema:
+            type: string
+            maxLength: 64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifierInterventionDO'
+        description: Objet intervention à déclarer chez l'OI
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModifierInterventionDOOut'
+          description: Operation Successful
+      x-security-in: IDENTITE_ET_GESTION
+      x-security-out: IDENTITE_ET_GESTION
+  /interventions-do/compte-rendu:
+    post:
+      tags:
+        - compteRenduInterventionDO
+      summary: ''
+      operationId: compteRenduInterventionDO
+      x-secured-access: strict
+      security:
+        - compteRenduInterventionDO_auth: []
+      parameters:
+        - name: trackerId
+          required: false
+          description: Navigation Unique Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-request-id
+          required: false
+          description: Request Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-source
+          required: false
+          description: Consumer application name
+          in: header
+          schema:
+            type: string
+            maxLength: 64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompteRenduInterventionDO'
+        description: Objet intervention à déclarer chez l'OI
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompteRenduInterventionDOOut'
+          description: Operation Successful
+      x-security-in: IDENTITE_ET_GESTION
+      x-security-out: IDENTITE_ET_GESTION
+  /interventions-do/test-intermediaire:
+    post:
+      tags:
+        - demanderTestIntermediareInterventionDO
+      summary: ''
+      operationId: demanderTestIntermediareInterventionDO
+      x-secured-access: strict
+      security:
+        - demanderTestIntermediareInterventionDO_auth: []
+      parameters:
+        - name: trackerId
+          required: false
+          description: Navigation Unique Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-request-id
+          required: false
+          description: Request Identifier
+          in: header
+          schema:
+            type: string
+            maxLength: 36
+        - name: x-source
+          required: false
+          description: Consumer application name
+          in: header
+          schema:
+            type: string
+            maxLength: 64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemanderTestIntermediaireInterventionDO'
+        description: Objet intervention à déclarer chez l'OI
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemanderTestIntermediaireInterventionDOOut'
+          description: Operation Successful
+      x-security-in: IDENTITE_ET_GESTION
+      x-security-out: IDENTITE_ET_GESTION
+components:
+  securitySchemes:
+    compteRenduInterventionDO_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
+          scopes: {}
+    creerInterventionDO_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
+          scopes: {}
+    demanderTestIntermediareInterventionDO_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
+          scopes: {}
+  schemas:
+    CompteRenduInterventionDO:
+      description: ''
+      type: object
+      required:
+        - codeDO
+        - codeOI
+        - message
+        - refIntervDO
+      properties:
+        codeDO:
+          description: Code opérateur Interop du donneur d'ordre
+          maxLength: 4
+          type: string
+        codeOI:
+          description: Code opérateur Interop de l'opérateur d'infrastructure
+          maxLength: 4
+          type: string
+        lignesImpactes:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/LigneImpacte'
+        lignesRetablies:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/LigneRetablie'
+        message:
+          description: ''
+          type: string
+        refIntervDO:
+          description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
+          maxLength: 50
+          type: string
+        refIntervOI:
+          description: ''
+          type: string
+    CompteRenduInterventionDOOut:
+      description: ''
+      type: object
+      required:
+        - code
+        - libelle
+      properties:
+        code:
+          description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          type: integer
+          format: int32
+        description:
+          description: Description de l'erreur
+          maxLength: 100
+          type: string
+        libelle:
+          description: ''
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - MAUVAIS_FORMAT
+            - OK
+            - REF_INTERV_INCONNUE
+        refIntervOI:
+          description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
+          maxLength: 50
+          type: string
+        refInterventionDO:
+          description: ''
+          type: string
+    CreerInterventionDO:
+      description: ''
+      type: object
+      required:
+        - codeDO
+        - codeOI
+        - dateDebutIntevention
+        - message
+        - nature
+        - pointMutualisation
+        - refIntervDO
+      properties:
+        codeDO:
+          description: Code opérateur Interop du donneur d'ordre
+          maxLength: 4
+          type: string
+        codeOI:
+          description: Code opérateur Interop de l'opérateur d'infrastructure
+          maxLength: 4
+          type: string
+        dateDebutIntevention:
+          description: debut intervention
+          type: string
+          format: date-time
+        dateFinIntervention:
+          description: Valeur NULL si M1 Date/heure de fin réel d'intervention si M3 (format selon la norme ISO 8601)
+          type: string
+          format: date-time
+        elementReseau:
+          description: ''
+          type: string
+          enum:
+            - PBO
+            - PM
+            - PTO
+        message:
+          description: ''
+          type: string
+        nature:
+          description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
+          type: string
+          enum:
+            - AUTRES_TRAVAUX_PROGRAMMES
+            - MAINTENANCE_OI
+            - NON_FOURNIE
+            - OPERATION_DE_MAINTENANCE_OC
+            - RACC
+            - RACC_OU_ SAV
+            - REC_PM_OC
+            - REPRISE_DE_MALFACON _OC
+            - REPRISE_DE_MALFACON _OI
+            - REPRISE_DE_MALFACONS
+            - SAV
+        pointMutualisation:
+          $ref: '#/components/schemas/PointMutualisation'
+        refIntervDO:
+          description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
+          maxLength: 50
+          type: string
+        refPBO:
+          description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
+          maxLength: 100
+          type: string
+        refPTO:
+          description: 'Référence PTO (Ex: FI-YYYY-YYYY) si disponible Réference prise (protocole interop)'
+          maxLength: 50
+          type: string
+        referencePrestationPrise:
+          description: ''
+          type: string
+    CreerInterventionDOOut:
+      description: ''
+      type: object
+      required:
+        - code
+        - libelle
+      properties:
+        code:
+          description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          type: integer
+          format: int32
+        description:
+          description: Description de l'erreur
+          maxLength: 100
+          type: string
+        libelle:
+          description: ''
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - MAUVAIS_FORMAT
+            - OK
+            - PM_INCONNU
+        refIntervDO:
+          description: ''
+          type: string
+        refIntervOI:
+          description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
+          maxLength: 50
+          type: string
+    DemanderTestIntermediaireInterventionDO:
+      description: ''
+      type: object
+      required:
+        - codeDO
+        - codeOI
+        - dateTest
+        - infosIntervention
+        - message
+        - natureTest
+        - numeroTest
+        - refIntervDO
+        - refIntervOI
+      properties:
+        codeDO:
+          description: Code opérateur Interop du donneur d'ordre
+          maxLength: 4
+          type: string
+        codeOI:
+          description: Code opérateur Interop de l'opérateur d'infrastructure
+          maxLength: 4
+          type: string
+        dateTest:
+          description: ''
+          type: string
+          format: date-time
+        infosIntervention:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/InfoIntervention'
+        message:
+          description: ''
+          type: string
+        natureTest:
+          description: ''
+          type: string
+        numeroTest:
+          description: ''
+          type: string
+        refIntervDO:
+          description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
+          maxLength: 50
+          type: string
+        refIntervOI:
+          description: ''
+          type: string
+    DemanderTestIntermediaireInterventionDOOut:
+      description: ''
+      type: object
+      required:
+        - code
+        - libelle
+        - numeroTest
+        - refInterventionDO
+      properties:
+        code:
+          description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          type: integer
+          format: int32
+        description:
+          description: Description de l'erreur
+          maxLength: 100
+          type: string
+        libelle:
+          description: ''
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - INCOHERENCE
+            - MAUVAIS_FORMAT
+            - OK
+            - REF_INTERV_INCONNUE
+            - TEST_PRECEDENT_DEJA_EMIS
+            - TEST_PRECEDENT_NON_ACQUITTE
+        numeroTest:
+          description: ''
+          type: string
+        refIntervOI:
+          description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
+          maxLength: 50
+          type: string
+        refInterventionDO:
+          description: ''
+          type: string
+    InfoIntervention:
+      description: ''
+      type: object
+      properties:
+        refPbo:
+          description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
+          maxLength: 100
+          type: string
+    LigneImpacte:
+      description: ''
+      type: object
+      properties:
+        refPTO:
+          description: ''
+          type: string
+        referencePrestationPrise:
+          description: ''
+          type: string
+        repaCodeOC:
+          description: ''
+          type: string
+        repaOCDemandee:
+          description: ''
+          type: string
+        retMessage:
+          description: ''
+          type: string
+        retStatut:
+          description: ''
+          type: string
+        retTypo:
+          description: ''
+          type: string
+        serialNumberONT:
+          description: ''
+          type: string
+    LigneRetablie:
+      description: ''
+      type: object
+      properties:
+        refPTO:
+          description: ''
+          type: array
+          items:
+            type: string
+        referencePrestationPrise:
+          description: ''
+          type: string
+        serialNumberONT:
+          description: ''
+          type: string
+    ModifierInterventionDO:
+      description: ''
+      type: object
+      required:
+        - codeDO
+        - codeOI
+        - dateDebutIntevention
+        - dateFinIntervention
+        - elementReseau
+        - message
+        - nature
+        - pointMutualisation
+        - refIntervDO
+      properties:
+        codeDO:
+          description: Code opérateur Interop du donneur d'ordre
+          maxLength: 4
+          type: string
+        codeOI:
+          description: Code opérateur Interop de l'opérateur d'infrastructure
+          maxLength: 4
+          type: string
+        dateDebutIntevention:
+          description: debut intervention
+          type: string
+          format: date-time
+        dateFinIntervention:
+          description: Valeur NULL si M1 Date/heure de fin réel d'intervention si M3 (format selon la norme ISO 8601)
+          type: string
+          format: date-time
+        elementReseau:
+          description: ''
+          type: string
+          enum:
+            - PBO
+            - PM
+            - PTO
+        message:
+          description: ''
+          type: string
+        nature:
+          description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
+          type: string
+          enum:
+            - AUTRES_TRAVAUX_PROGRAMMES
+            - MAINTENANCE_OI
+            - NON_FOURNIE
+            - OPERATION_DE_MAINTENANCE_OC
+            - RACC
+            - RACC_OU_ SAV
+            - REC_PM_OC
+            - REPRISE_DE_MALFACON _OC
+            - REPRISE_DE_MALFACON _OI
+            - REPRISE_DE_MALFACONS
+            - SAV
+        pointMutualisation:
+          $ref: '#/components/schemas/PointMutualisation1'
+        refIntervDO:
+          description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
+          maxLength: 50
+          type: string
+        refPBO:
+          description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
+          maxLength: 100
+          type: string
+        refPTO:
+          description: 'Référence PTO (Ex: FI-YYYY-YYYY) si disponible Réference prise (protocole interop)'
+          maxLength: 50
+          type: string
+        referencePrestationPrise:
+          description: ''
+          type: string
+    ModifierInterventionDOOut:
+      description: ''
+      type: object
+      required:
+        - code
+        - libelle
+      properties:
+        code:
+          description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          type: integer
+          format: int32
+        description:
+          description: Description de l'erreur
+          maxLength: 100
+          type: string
+        libelle:
+          description: ''
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - M3TX_NON_DEMANDE
+            - MAUVAIS_FORMAT
+            - OK
+            - PM_INCONNU
+        refIntervOI:
+          description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
+          maxLength: 50
+          type: string
+        refInterventionDO:
+          description: ''
+          type: string
+    PointMutualisation:
+      description: ''
+      type: object
+      required:
+        - refPM
+      properties:
+        pointMutualisationTechnique:
+          $ref: '#/components/schemas/PointMutualisationTechnique'
+        refPM:
+          description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
+          maxLength: 50
+          type: string
+    PointMutualisation1:
+      description: ''
+      type: object
+      required:
+        - refPM
+      properties:
+        pointMutualisationTechnique:
+          $ref: '#/components/schemas/PointMutualisationTechnique1'
+        refPM:
+          description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
+          maxLength: 50
+          type: string
+    PointMutualisationTechnique:
+      description: ''
+      type: object
+      required:
+        - refPMTechnique
+      properties:
+        refPMTechnique:
+          description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+          type: string
+    PointMutualisationTechnique1:
+      description: ''
+      type: object
+      required:
+        - refPMTechnique
+      properties:
+        refPMTechnique:
+          description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+          type: string
+info:
+  x-objetmetier: INTERVENTION-DO
+  x-sf: ''
+  x-st: MSF
+  x-type: partenaire
+  x-execution: api
+  x-role: consumer
+  title: INTERVENTION-DO
+  version: 1.0.269
+  description: "Spécification des ressources qui devront être exposées par les différents acteurs impliqués par le protocole E-Intervention."
+  contact:
+    name: MOE MSF
+tags:
+  - name: creerInterventionDO
+    description: ''
+  - name: compteRenduInterventionDO
+    description: ''
+  - name: demanderTestIntermediareInterventionDO
+    description: ''
+  - name: modifierInterventionDO
+    description: ''
+externalDocs:
+  description: "Groupe Interop'Fibre"
+  url: "https://www.interop-fibre.fr/"
