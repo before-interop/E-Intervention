@@ -9,33 +9,12 @@ paths:
     post:
       tags:
         - creerInterventionDO
-      summary: ''
+      summary: 'Flux M1: Message transmis par le DO à l’OI pour notifier le début d’intervention.'
       operationId: creerInterventionDO
       x-secured-access: strict
       security:
         - creerInterventionDO_auth: []
-      parameters:
-        - name: trackerId
-          required: false
-          description: Navigation Unique Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-request-id
-          required: false
-          description: Request Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-source
-          required: false
-          description: Consumer application name
-          in: header
-          schema:
-            type: string
-            maxLength: 64
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -50,36 +29,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreerInterventionDOOut'
           description: Operation Successful
-      x-security-in: IDENTITE_ET_GESTION
-      x-security-out: IDENTITE_ET_GESTION
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       tags:
         - modifierInterventionDO
-      summary: ''
+      summary: 'Flux M3: Le message M3 déclare la fin d’intervention du DO'
       operationId: modifierInterventionDO
       x-secured-access: none
-      parameters:
-        - name: trackerId
-          required: false
-          description: Navigation Unique Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-request-id
-          required: false
-          description: Request Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-source
-          required: false
-          description: Consumer application name
-          in: header
-          schema:
-            type: string
-            maxLength: 64
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -94,39 +56,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModifierInterventionDOOut'
           description: Operation Successful
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-do/compte-rendu:
     post:
       tags:
         - compteRenduInterventionDO
-      summary: ''
+      summary: 'Flux M3 optionel: Compte rendu de fin d''intervention DO'
       operationId: compteRenduInterventionDO
       x-secured-access: strict
       security:
         - compteRenduInterventionDO_auth: []
-      parameters:
-        - name: trackerId
-          required: false
-          description: Navigation Unique Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-request-id
-          required: false
-          description: Request Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-source
-          required: false
-          description: Consumer application name
-          in: header
-          schema:
-            type: string
-            maxLength: 64
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -141,39 +88,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/CompteRenduInterventionDOOut'
           description: Operation Successful
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-do/test-intermediaire:
     post:
       tags:
-        - demanderTestIntermediareInterventionDO
-      summary: ''
-      operationId: demanderTestIntermediareInterventionDO
+        - demanderTestIntermediaireInterventionDO
+      summary: 'Flux M3TX: demande de test intermediaire'
+      operationId: demanderTestIntermediaireInterventionDO
       x-secured-access: strict
       security:
-        - demanderTestIntermediareInterventionDO_auth: []
-      parameters:
-        - name: trackerId
-          required: false
-          description: Navigation Unique Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-request-id
-          required: false
-          description: Request Identifier
-          in: header
-          schema:
-            type: string
-            maxLength: 36
-        - name: x-source
-          required: false
-          description: Consumer application name
-          in: header
-          schema:
-            type: string
-            maxLength: 64
+        - demanderTestIntermediaireInterventionDO_auth: []
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -188,24 +120,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/DemanderTestIntermediaireInterventionDOOut'
           description: Operation Successful
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
 components:
   securitySchemes:
     compteRenduInterventionDO_auth:
       type: oauth2
+      x-habilitations: []
       flows:
         implicit:
           authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
           scopes: {}
     creerInterventionDO_auth:
       type: oauth2
+      x-habilitations: []
       flows:
         implicit:
           authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
           scopes: {}
-    demanderTestIntermediareInterventionDO_auth:
+    demanderTestIntermediaireInterventionDO_auth:
       type: oauth2
+      x-habilitations: []
       flows:
         implicit:
           authorizationUrl: https://oauth2.bouyguestelecom.fr/authorize
@@ -228,7 +169,7 @@ components:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
           type: string
-        lignesImpactes:
+        lignesImpactees:
           description: ''
           type: array
           items:
@@ -253,7 +194,7 @@ components:
       type: object
       required:
         - code
-        - libelle
+        - refInterventionDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
@@ -263,15 +204,6 @@ components:
           description: Description de l'erreur
           maxLength: 100
           type: string
-        libelle:
-          description: ''
-          type: string
-          enum:
-            - CHAMPS_NON_RENSEIGNE
-            - CODE_OI_INCONNU
-            - MAUVAIS_FORMAT
-            - OK
-            - REF_INTERV_INCONNUE
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
@@ -321,17 +253,17 @@ components:
           description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
           type: string
           enum:
-            - AUTRES_TRAVAUX_PROGRAMMES
-            - MAINTENANCE_OI
-            - NON_FOURNIE
-            - OPERATION_DE_MAINTENANCE_OC
-            - RACC
-            - RACC_OU_ SAV
-            - REC_PM_OC
-            - REPRISE_DE_MALFACON _OC
-            - REPRISE_DE_MALFACON _OI
-            - REPRISE_DE_MALFACONS
-            - SAV
+            - '1'
+            - '2'
+            - '20'
+            - '21'
+            - '22'
+            - '4'
+            - '41'
+            - '5'
+            - '6'
+            - '60'
+            - '61'
         pointMutualisation:
           $ref: '#/components/schemas/PointMutualisation'
         refIntervDO:
@@ -354,7 +286,7 @@ components:
       type: object
       required:
         - code
-        - libelle
+        - refIntervDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
@@ -364,15 +296,6 @@ components:
           description: Description de l'erreur
           maxLength: 100
           type: string
-        libelle:
-          description: ''
-          type: string
-          enum:
-            - CHAMPS_NON_RENSEIGNE
-            - CODE_OI_INCONNU
-            - MAUVAIS_FORMAT
-            - OK
-            - PM_INCONNU
         refIntervDO:
           description: ''
           type: string
@@ -419,7 +342,8 @@ components:
           type: string
         numeroTest:
           description: ''
-          type: string
+          type: integer
+          format: int32
         refIntervDO:
           description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
           maxLength: 50
@@ -432,7 +356,6 @@ components:
       type: object
       required:
         - code
-        - libelle
         - numeroTest
         - refInterventionDO
       properties:
@@ -444,21 +367,10 @@ components:
           description: Description de l'erreur
           maxLength: 100
           type: string
-        libelle:
-          description: ''
-          type: string
-          enum:
-            - CHAMPS_NON_RENSEIGNE
-            - CODE_OI_INCONNU
-            - INCOHERENCE
-            - MAUVAIS_FORMAT
-            - OK
-            - REF_INTERV_INCONNUE
-            - TEST_PRECEDENT_DEJA_EMIS
-            - TEST_PRECEDENT_NON_ACQUITTE
         numeroTest:
           description: ''
-          type: string
+          type: integer
+          format: int32
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
@@ -530,6 +442,7 @@ components:
         - nature
         - pointMutualisation
         - refIntervDO
+        - testFinFroid
       properties:
         codeDO:
           description: Code opérateur Interop du donneur d'ordre
@@ -561,19 +474,19 @@ components:
           description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
           type: string
           enum:
-            - AUTRES_TRAVAUX_PROGRAMMES
-            - MAINTENANCE_OI
-            - NON_FOURNIE
-            - OPERATION_DE_MAINTENANCE_OC
-            - RACC
-            - RACC_OU_ SAV
-            - REC_PM_OC
-            - REPRISE_DE_MALFACON _OC
-            - REPRISE_DE_MALFACON _OI
-            - REPRISE_DE_MALFACONS
-            - SAV
+            - '1'
+            - '2'
+            - '20'
+            - '21'
+            - '22'
+            - '4'
+            - '41'
+            - '5'
+            - '6'
+            - '60'
+            - '61'
         pointMutualisation:
-          $ref: '#/components/schemas/PointMutualisation1'
+          $ref: '#/components/schemas/PointMutualisation'
         refIntervDO:
           description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
           maxLength: 50
@@ -589,12 +502,15 @@ components:
         referencePrestationPrise:
           description: ''
           type: string
+        testFinFroid:
+          description: ''
+          type: string
     ModifierInterventionDOOut:
       description: ''
       type: object
       required:
         - code
-        - libelle
+        - refInterventionDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
@@ -604,16 +520,6 @@ components:
           description: Description de l'erreur
           maxLength: 100
           type: string
-        libelle:
-          description: ''
-          type: string
-          enum:
-            - CHAMPS_NON_RENSEIGNE
-            - CODE_OI_INCONNU
-            - M3TX_NON_DEMANDE
-            - MAUVAIS_FORMAT
-            - OK
-            - PM_INCONNU
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
@@ -626,64 +532,68 @@ components:
       type: object
       required:
         - refPM
+        - refPMTechnique
       properties:
-        pointMutualisationTechnique:
-          $ref: '#/components/schemas/PointMutualisationTechnique'
         refPM:
           description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
           maxLength: 50
           type: string
-    PointMutualisation1:
-      description: ''
-      type: object
-      required:
-        - refPM
-      properties:
-        pointMutualisationTechnique:
-          $ref: '#/components/schemas/PointMutualisationTechnique1'
-        refPM:
-          description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
-          maxLength: 50
-          type: string
-    PointMutualisationTechnique:
-      description: ''
-      type: object
-      required:
-        - refPMTechnique
-      properties:
         refPMTechnique:
           description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
           type: string
-    PointMutualisationTechnique1:
-      description: ''
+    ErrorResponse:
+      description: Description d'une erreur fonctionnelle
       type: object
       required:
-        - refPMTechnique
+        - error
       properties:
-        refPMTechnique:
-          description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
           type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - MAUVAIS_FORMAT
+            - PM_INCONNU
+            - REF_INTERV_INCONNUE
+            - INCOHERENCE
+            - TEST_PRECEDENT_DEJA_EMIS
+            - TEST_PRECEDENT_NON_ACQUITTE
+            - M3TX_NON_DEMANDE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
 info:
   x-objetmetier: INTERVENTION-DO
   x-sf: ''
   x-st: MSF
   x-type: partenaire
   x-execution: api
-  x-role: consumer
+  x-role: provider
   title: INTERVENTION-DO
-  version: 1.0.269
-  description: "Spécification des ressources qui devront être exposées par les différents acteurs impliqués par le protocole E-Intervention."
+  version: 1.0.287
+  description: ''
   contact:
     name: MOE MSF
 tags:
   - name: creerInterventionDO
-    description: ''
+    description: 'Flux M1: Message transmis par le DO à l’OI pour notifier le début d’intervention.'
   - name: compteRenduInterventionDO
-    description: ''
-  - name: demanderTestIntermediareInterventionDO
-    description: ''
+    description: 'Flux M3 optionel: Compte rendu de fin d''intervention DO'
+  - name: demanderTestIntermediaireInterventionDO
+    description: 'Flux M3TX: demande de test intermediaire'
   - name: modifierInterventionDO
-    description: ''
+    description: 'Flux M3: Le message M3 déclare la fin d’intervention du DO'
 externalDocs:
   description: "Groupe Interop'Fibre"
   url: "https://www.interop-fibre.fr/"
