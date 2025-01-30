@@ -9,7 +9,7 @@ paths:
     post:
       tags:
         - creerInterventionOI
-      summary: "Flux M2: Début d’intervention DO transmis par l’OI aux autres OCs presents au PM."
+      summary: 'Flux M2: Début d’intervention DO transmis par l’OI aux autres OCs presents au PM.'
       operationId: creerInterventionOI
       x-secured-access: strict
       security:
@@ -34,13 +34,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/CreerInterventionOI400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
     put:
       tags:
         - modifierInterventionOI
-      summary: "Flux M4: la fin de l'intervention notifier par l'OI"
+      summary: "Flux M4: la fin de l'intervention notifiée par l'OI"
       operationId: modifierInterventionOI
       x-secured-access: strict
       security:
@@ -65,14 +65,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ModifierInterventionOI400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-oi/compte-rendu:
     post:
       tags:
         - compteRenduInterventionOI
-      summary: "Flux M3 optionnel: compte rendu de fin d'intervention relié par l'OI"
+      summary: "Flux M4 optionnel: compte rendu de fin d'intervention relayé par l'OI"
       operationId: compteRenduInterventionOI
       x-secured-access: strict
       security:
@@ -97,14 +97,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/CompteRenduInterventionOI400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-oi/notification-impacte-clients-oc:
     post:
       tags:
         - notifierImpacteClientsOC
-      summary: "Flux M5TX: Impacts clients identifiés par l’OC"
+      summary: 'Flux M5TX: Impacts clients identifiés par l’OC'
       operationId: notifierImpacteClientsOC
       x-secured-access: strict
       security:
@@ -129,14 +129,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/NotifierImpacteClientsOC400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-oi/notification-impacte-clients-oi-do:
     post:
       tags:
         - notifierImpacteClientsOIDO
-      summary: "Flux M6TX:  Impacts clients relayés par l’OI au DO"
+      summary: 'Flux M6TX:  Impacts clients relayés par l’OI au DO'
       operationId: notifierImpacteClientsOIDO
       x-secured-access: strict
       security:
@@ -161,7 +161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/NotifierImpacteClientsOIDO400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-oi/test-intermediaire:
@@ -193,7 +193,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/DemanderTestIntermediaireInterventionOI400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
 components:
@@ -242,7 +242,7 @@ components:
           scopes: {}
   schemas:
     ClientHSOC:
-      description: "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle"
+      description: 'Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l''heure de coupure est comprise dans l''intervalle'
       type: object
       required:
         - dateChangementEtat
@@ -255,46 +255,56 @@ components:
         - tube
       properties:
         couleurJarretiere:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         dateChangementEtat:
           description: Date/heure de début de coupure pour le client (format selon la norme ISO 8601)
           type: string
           format: date-time
         fibre:
-          description: ""
-          maxLength: 50
+          description: ''
+          maxLength: 20
           type: string
         nomModulePM:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         numeroSerieONT:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         positionCoupleurOC:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         positionModulePM:
-          description: ""
-          maxLength: 100
+          description: ''
+          maxLength: 256
           type: string
         refPBO:
-          description: ""
+          description: ''
           maxLength: 100
           type: string
         refPTO:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         referencePrestationPrise:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         tube:
-          description: ""
-          maxLength: 50
+          description: ''
+          maxLength: 20
           type: string
     ClientHSOC1:
-      description: "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle"
+      description: 'Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l''heure de coupure est comprise dans l''intervalle'
       type: object
       required:
         - dateChangementEtat
@@ -307,60 +317,72 @@ components:
         - tube
       properties:
         couleurJarretiere:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         dateChangementEtat:
-          description: ""
+          description: ''
           type: string
           format: date-time
         fibre:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         nomModulePM:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         numeroSerieONT:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         positionCoupleurOC:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         positionModulePM:
-          description: ""
-          maxLength: 100
+          description: ''
+          maxLength: 256
           type: string
         refPBO:
-          description: ""
+          description: ''
           maxLength: 100
           type: string
         refPTO:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         referencePrestationPrise:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
-        reserveReparationOI:
-          description: ""
-          type: boolean
+        reserve:
+          description: ''
+          maxLength: 500
+          minLength: 1
+          type: string
         tube:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
     ClientImpacteOCParIntervention:
-      description: ""
+      description: ''
       type: object
       required:
         - clientHSOC
         - codeOcImpacte
         - ligneClientRetablie
         - message
-        - referenceIntervOI
+        - refIntervOI
         - testCloture
       properties:
         clientHSOC:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/ClientHSOC'
@@ -369,54 +391,64 @@ components:
           maxLength: 4
           type: string
         demandeReapartion:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/DemandeReparation'
         ligneClientRetablie:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/LigneClientRetablie'
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         numeroTest:
-          description: ""
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
-        referenceIntervOI:
-          description: Référence d’intervention unique produite par l'OI
+        refIntervOI:
+          description: Référence d�??intervention unique produite par l'OI
           maxLength: 50
           type: string
         testCloture:
-          description: ""
-          type: string
+          description: ''
+          type: boolean
     ClientImpacteParInterventionOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
         - numeroTest
-        - referenceIntervOI
+        - refIntervOI
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
         numeroTest:
-          description: ""
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
-        referenceIntervOI:
-          description: ""
+        refIntervOI:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     CompteRenduInterventionOI:
-      description: ""
+      description: ''
       type: object
       required:
         - codeOI
@@ -428,28 +460,30 @@ components:
           maxLength: 4
           type: string
         lignesImpactees:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/LigneImpacte'
         lignesRetablies:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/LigneRetablie'
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         refIntervOI:
-          description: Référence d’intervention unique produite par l’OI dans R M1/R M3
+          description: Référence d�??intervention unique produite par l�??OI dans R M1/R M3
           maxLength: 50
           type: string
     CompteRenduInterventionOIOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
-        - refInterventionOI
+        - refIntervOI
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
@@ -457,17 +491,19 @@ components:
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
-        refInterventionOI:
-          description: ""
+        refIntervOI:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     CreerInterventionOI:
-      description: ""
+      description: ''
       type: object
       required:
         - codeOI
-        - dateDebutIntevention
+        - dateDebutIntervention
         - message
         - refIntervOI
         - refPBO
@@ -475,67 +511,82 @@ components:
         codeOI:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
+          minLength: 4
           type: string
-        dateDebutIntevention:
+        dateDebutIntervention:
           description: Date/heure de début réel d'intervention (format selon la norme ISO 8601)
           type: string
           format: date-time
         description:
-          description: ""
+          description: ''
+          maxLength: 200
+          minLength: 1
           type: string
         elementReseau:
-          description: ""
+          description: ''
+          maxLength: 3
+          minLength: 1
           type: string
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         pointMutualisation:
           $ref: '#/components/schemas/PointMutualisation'
         refIntervOI:
-          description: Référence d’intervention unique produite par l’OI dans R M1/R M3
+          description: Référence d�??intervention unique produite par l�??OI dans R M1/R M3
           maxLength: 50
+          minLength: 1
           type: string
         refPBO:
-          description: ""
+          description: ''
+          maxLength: 100
+          minLength: 1
           type: string
     CreerInterventionOIOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
-        - refInterventionOI
+        - refIntervOI
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
-        refInterventionOI:
-          description: ""
+        refIntervOI:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     DemandeReparation:
-      description: ""
+      description: ''
       type: object
       required:
         - codeDO
       properties:
         codeDO:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         reparation:
-          description: ""
+          description: ''
           default: false
           type: boolean
     DemanderTestIntermediaireInterventionOI:
-      description: ""
+      description: ''
       type: object
       required:
         - codeOI
         - dateTest
-        - infosIntervention
         - message
         - natureTest
         - numeroTest
@@ -546,29 +597,32 @@ components:
           maxLength: 4
           type: string
         dateTest:
-          description: ""
+          description: ''
           type: string
           format: date-time
-        infosIntervention:
-          description: ""
-          type: array
-          items:
-            $ref: '#/components/schemas/InfoIntervention'
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         natureTest:
-          description: ""
+          description: ''
+          maxLength: 10
+          minLength: 1
           type: string
         numeroTest:
-          description: ""
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         refIntervOI:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     DemanderTestIntermediaireInterventionOIOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
@@ -576,30 +630,27 @@ components:
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
+          minLength: 1
           type: string
         numeroTest:
-          description: ""
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         refIntervOI:
-          description: "Conditionnel: si Libelle_Reponse = OK Référence d'intervention unique produite par l'opérateur d'infrastructure"
+          description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
-    InfoIntervention:
-      description: ""
-      type: object
-      properties:
-        refPbo:
-          description: "Référence PBO (Ex: PTXXXXXXX) si disponible"
-          maxLength: 100
-          type: string
     LigneClientRetablie:
-      description: "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle"
+      description: 'Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l''heure de coupure est comprise dans l''intervalle'
       type: object
       required:
         - dateChangementEtat
@@ -615,36 +666,42 @@ components:
           type: string
           format: date-time
         fibre:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         nomModulePm:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         numeroSerieONT:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         positionModulePM:
-          description: ""
+          description: ''
           maxLength: 100
           type: string
         refPBO:
-          description: ""
+          description: ''
           maxLength: 100
           type: string
         refPTO:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         referencePrestationPrise:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         tube:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
     LigneClientRetablie1:
-      description: "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle"
+      description: 'Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l''heure de coupure est comprise dans l''intervalle'
       type: object
       required:
         - dateChangementEtat
@@ -657,97 +714,119 @@ components:
         - tube
       properties:
         dateChangementEtat:
-          description: ""
+          description: ''
           type: string
           format: date-time
         fibre:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         nomModulePM:
-          description: ""
+          description: ''
+          maxLength: 256
+          minLength: 1
           type: string
         numeroSerieONT:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         positionModulePM:
-          description: ""
-          maxLength: 100
+          description: ''
+          maxLength: 256
           type: string
         refPBO:
-          description: ""
+          description: ''
           maxLength: 100
           type: string
         refPTO:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
         referencePrestationPrise:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         tube:
-          description: ""
+          description: ''
           maxLength: 50
           type: string
     LigneImpacte:
-      description: ""
+      description: ''
       type: object
       properties:
+        numeroSerieONT:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
         refPTO:
-          description: ""
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         referencePrestationPrise:
-          description: ""
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         repaCodeOC:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         repaOCDemandee:
-          description: ""
-          type: string
+          description: ''
+          type: boolean
         retMessage:
-          description: ""
+          description: ''
+          maxLength: 500
+          minLength: 1
           type: string
         retStatut:
-          description: ""
-          type: string
+          description: ''
+          type: boolean
         retTypo:
-          description: ""
-          type: string
-        serialNumberONT:
-          description: ""
+          description: ''
+          maxLength: 500
+          minLength: 1
           type: string
     LigneRetablie:
-      description: ""
+      description: ''
       type: object
       properties:
-        refPTO:
-          description: ""
-          type: array
-          items:
-            type: string
-        referencePrestationPrise:
-          description: ""
+        '-numeroSerieONT':
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
-        serialNumberONT:
-          description: ""
+        refPTO:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
+        referencePrestationPrise:
+          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
     ModifierInterventionOI:
-      description: ""
+      description: ''
       type: object
       required:
         - codeOI
-        - dateDebutIntevention
+        - dateDebutIntervention
+        - dateTestFinFroid
         - message
         - pointMutualisation
         - refIntervOI
-        - testFinFroid
       properties:
         codeOI:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
           type: string
-        dateDebutIntevention:
+        dateDebutIntervention:
           description: Date/heure de début réel d'intervention (format selon la norme ISO 8601)
           type: string
           format: date-time
@@ -755,44 +834,53 @@ components:
           description: Valeur NULL si M2 Date/heure de fin réel d'intervention si M4 (format selon la norme ISO 8601)
           type: string
           format: date-time
+        dateTestFinFroid:
+          description: ''
+          type: string
+          format: date-time
         description:
-          description: ""
+          description: ''
           type: string
         elementReseau:
-          description: ""
+          description: ''
+          maxLength: 3
+          minLength: 1
           type: string
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         pointMutualisation:
-          $ref: '#/components/schemas/PointMutualisation'
+          $ref: '#/components/schemas/PointMutualisation1'
         refIntervOI:
-          description: Référence d’intervention unique produite par l’OI dans R M1/R M3
+          description: Référence d�??intervention unique produite par l�??OI dans R M1/R M3
           maxLength: 50
           type: string
-        testFinFroid:
-          description: ""
-          type: string
     ModifierInterventionOIOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
-        - refInterventionOI
+        - refIntervOI
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
-        refInterventionOI:
-          description: ""
+        refIntervOI:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     NotifierImpacteClientsOIDO:
-      description: ""
+      description: ''
       type: object
       required:
         - clientHSOC
@@ -801,11 +889,11 @@ components:
         - message
         - multiInterventionOI
         - nombreOC
-        - referenceIntervOI
+        - refIntervOI
         - reparation
       properties:
         clientHSOC:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/ClientHSOC1'
@@ -814,70 +902,130 @@ components:
           maxLength: 4
           type: string
         ligneClientRetablie:
-          description: ""
+          description: ''
           type: array
           items:
             $ref: '#/components/schemas/LigneClientRetablie1'
         message:
-          description: ""
+          description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         multiInterventionOI:
-          description: ""
+          description: ''
           type: boolean
         nombreOC:
-          description: ""
+          description: ''
           type: integer
           format: int32
         numeroTest:
-          description: ""
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
-        referenceIntervOI:
-          description: Référence d’intervention unique produite par l'OI
+        refIntervOI:
+          description: Référence d�??intervention unique produite par l'OI
           maxLength: 50
           type: string
         reparation:
-          description: ""
+          description: ''
           type: boolean
     NotifierImpacteClientsOIDOOut:
-      description: ""
+      description: ''
       type: object
       required:
         - code
         - numeroTest
-        - referenceIntervOI
+        - refIntervOI
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
         numeroTest:
-          description: ""
-          readOnly: true
+          description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
-        referenceIntervOI:
-          description: ""
+        refIntervOI:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
+        reserve:
+          description: ''
+          maxLength: 500
+          minLength: 1
           type: string
     PointMutualisation:
-      description: ""
+      description: ''
       type: object
       required:
         - refPM
         - refPMTechnique
       properties:
         refPM:
-          description: "Référence réglementaire du PM (ex: FI-XXXXX-XXXX)"
+          description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
           maxLength: 50
           type: string
         refPMTechnique:
-          description: "C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO."
+          description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+          maxLength: 50
+          minLength: 1
           type: string
-    ErrorResponse:
+    PointMutualisation1:
+      description: ''
+      type: object
+      required:
+        - refPM
+        - refPMTechnique
+      properties:
+        refPM:
+          description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
+          maxLength: 50
+          type: string
+        refPMTechnique:
+          description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+          maxLength: 50
+          minLength: 1
+          type: string
+    CompteRenduInterventionOI400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - INCOHERENCE
+            - MAUVAIS_FORMAT
+            - PM_INCONNU
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    CreerInterventionOI400Response:
       description: Description d'une erreur fonctionnelle
       type: object
       required:
@@ -891,13 +1039,117 @@ components:
             - CODE_OI_INCONNU
             - MAUVAIS_FORMAT
             - PM_INCONNU
-            - REF_INTERV_OI_INCONNUE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    DemanderTestIntermediaireInterventionOI400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
             - INCOHERENCE
-            - TEST_PRECEDENT_DEJA_EMIS
-            - TEST_PRECEDENT_NON_ACQUITTE
-            - M3TX_NON_DEMANDE
+            - MAUVAIS_FORMAT
+            - REF_INTERVOI_INCONNUE
+            - TEST_NON_REALISE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    ModifierInterventionOI400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - INCOHERENCE
+            - MAUVAIS_FORMAT
+            - PM_INCONNU
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    NotifierImpacteClientsOC400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
             - DELAI_NON_RESPECTE
             - ERREUR_ITERATION
+            - MAUVAIS_FORMAT
+            - REF_INTERV_OI_INCONNUE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    NotifierImpacteClientsOIDO400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - MAUVAIS_FORMAT
+            - REF_INTERV_OI_INCONNUE
         error_description:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
@@ -913,25 +1165,25 @@ components:
             maxLength: 64
 info:
   x-objetmetier: INTERVENTION-OI
-  x-sf: ""
+  x-sf: ''
   x-st: MSF
   x-type: partenaire
   x-execution: api
   x-role: provider
   title: INTERVENTION-OI
-  version: 1.0.287
-  description: ""
+  version: 1.0.310
+  description: ''
   contact:
     name: MOE MSF
 tags:
   - name: demanderTestIntermediaireInterventionOI
     description: "Flux M4TX: Demande de test DO relayée par l’OI"
   - name: modifierInterventionOI
-    description: "Flux M4: la fin de l'intervention notifier par l'OI"
+    description: "Flux M4: la fin de l'intervention notifiée par l'OI"
   - name: creerInterventionOI
     description: "Flux M2 : Début d’intervention DO transmis par l’OI aux autres OCs presents au PM."
   - name: compteRenduInterventionOI
-    description: "Flux M3 optionnel: compte rendu de fin d'intervention relié par l'OI"
+    description: "Flux M4 optionnel: compte rendu de fin d'intervention relayé par l'OI"
   - name: notifierImpacteClientsOC
     description: "Flux M5TX: Impacts clients identifiés par l’OC"
   - name: notifierImpacteClientsOIDO

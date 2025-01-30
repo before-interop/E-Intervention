@@ -12,40 +12,40 @@
 
 #### Flux M1
 
-![CreerInterventionDO](Images_objets_metiers/[PAR]%20CreerInterventionDO.svg)
+![CreerInterventionDO](E-INTERVENTION-V2/INTERVENTION-DO/creerInterventionDO/diagrammes/[PAR]%20CreerInterventionDO.svg)
 
 #### Flux M2
 
-![CreerInterventionOI](Images_objets_metiers/[PAR]%20CreerInterventionOI.svg)
+![CreerInterventionOI](E-INTERVENTION-V2/INTERVENTION-OI/creerInterventionOI/diagrammes/[PAR]%20CreerInterventionOI.svg)
 
 #### Flux M3TX
 
-![DemanderTestIntermediaireInterventionDO](Images_objets_metiers/[PAR]%20DemanderTestIntermediaireInterventionDO.svg)
+![DemanderTestIntermediaireInterventionDO](E-INTERVENTION-V2/INTERVENTION-DO/demanderTestIntermediaireInterventionDO/diagrammes/[PAR]%20DemanderTestIntermediaireInterventionDO.svg)
 
 #### Flux M4TX
 
-![DemanderTestIntermediaireInterventionOI](Images_objets_metiers/[PAR]%20DemanderTestIntermediaireInterventionOI.svg)
+![DemanderTestIntermediaireInterventionOI](E-INTERVENTION-V2/INTERVENTION-OI/demanderTestIntermediaireInterventionOI/diagrammes/[PAR]%20DemanderTestIntermediaireInterventionOI.svg)
 
 #### Flux M5TX
 
-![NotifierImpacteClientsOC](Images_objets_metiers/[PAR]%20NotifierImpacteClientsOC.svg)
+![NotifierImpacteClientsOC](E-INTERVENTION-V2/INTERVENTION-OI/notifierImpacteClientsOC/diagrammes/[PAR]%20NotifierImpacteClientsOC.svg)
 
 #### Flux M6TX
 
-![NotifierImpacteClientsOIDO](Images_objets_metiers/[PAR]%20NotifierImpacteClientsOIDO.svg)
+![NotifierImpacteClientsOIDO](E-INTERVENTION-V2/INTERVENTION-OI/notifierImpacteClientsOIDO/diagrammes/[PAR]%20NotifierImpacteClientsOIDO.svg)
 
 #### Flux M3
 
-![ModifierInterventionDO](Images_objets_metiers/[PAR]%20ModifierInterventionDO.svg)
+![ModifierInterventionDO](E-INTERVENTION-V2/INTERVENTION-DO/modifierInterventionDO/diagrammes/[PAR]%20ModifierInterventionDO.svg)
 
 #### Flux M3 Optionnel : Compte rendu d'intervention
 
 Partie DO :
-![ModifierInterventionDO](Images_objets_metiers/[PAR]%20CompteRenduInterventionDO.svg)
+![ModifierInterventionDO](E-INTERVENTION-V2/INTERVENTION-DO/compteRenduInterventionDO/diagrammes/[PAR]%20CompteRenduInterventionDO.svg)
 
 Partie OI:
-![ModifierInterventionDO](Images_objets_metiers/[PAR]%20CompteRenduInterventionOI.svg)
+![ModifierInterventionDO](E-INTERVENTION-V2/INTERVENTION-OI/compteRenduInterventionOI/diagrammes/[PAR]%20CompteRenduInterventionOI.svg)
 
 #### Flux M4
 
-![ModifierInterventionOI](Images_objets_metiers/[PAR]%20ModifierInterventionOI.svg)
+![ModifierInterventionOI](E-INTERVENTION-V2/INTERVENTION-OI/modifierInterventionOI/diagrammes/[PAR]%20ModifierInterventionOI.svg)

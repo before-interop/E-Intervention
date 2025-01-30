@@ -34,7 +34,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/CreerInterventionDO400Response'
+      x-security-in: IDENTITE_ET_GESTION
+      x-security-out: IDENTITE_ET_GESTION
     put:
       tags:
         - modifierInterventionDO
@@ -61,14 +63,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/ModifierInterventionDO400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-do/compte-rendu:
     post:
       tags:
         - compteRenduInterventionDO
-      summary: 'Flux M3 optionel: Compte rendu de fin d''intervention DO'
+      summary: 'Flux M3 optionnel: Compte rendu de fin d''intervention qui intervient juste après l''envoi du  M3.'
       operationId: compteRenduInterventionDO
       x-secured-access: strict
       security:
@@ -93,7 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/CompteRenduInterventionDO400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
   /interventions-do/test-intermediaire:
@@ -125,7 +127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/DemanderTestIntermediaireInterventionDO400Response'
       x-security-in: IDENTITE_ET_GESTION
       x-security-out: IDENTITE_ET_GESTION
 components:
@@ -181,6 +183,8 @@ components:
             $ref: '#/components/schemas/LigneRetablie'
         message:
           description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         refIntervDO:
           description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
@@ -188,28 +192,34 @@ components:
           type: string
         refIntervOI:
           description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     CompteRenduInterventionDOOut:
       description: ''
       type: object
       required:
         - code
-        - refInterventionDO
+        - refIntervDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
+          type: string
+        refIntervDO:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
-          type: string
-        refInterventionDO:
-          description: ''
           type: string
     CreerInterventionDO:
       description: ''
@@ -217,7 +227,7 @@ components:
       required:
         - codeDO
         - codeOI
-        - dateDebutIntevention
+        - dateDebutIntervention
         - message
         - nature
         - pointMutualisation
@@ -231,7 +241,7 @@ components:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
           type: string
-        dateDebutIntevention:
+        dateDebutIntervention:
           description: debut intervention
           type: string
           format: date-time
@@ -248,6 +258,8 @@ components:
             - PTO
         message:
           description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         nature:
           description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
@@ -273,13 +285,17 @@ components:
         refPBO:
           description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
           maxLength: 100
+          minLength: 1
           type: string
         refPTO:
           description: 'Référence PTO (Ex: FI-YYYY-YYYY) si disponible Réference prise (protocole interop)'
           maxLength: 50
+          minLength: 1
           type: string
         referencePrestationPrise:
           description: ''
+          maxLength: 30
+          minLength: 1
           type: string
     CreerInterventionDOOut:
       description: ''
@@ -290,14 +306,18 @@ components:
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
         refIntervDO:
           description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
@@ -310,7 +330,6 @@ components:
         - codeDO
         - codeOI
         - dateTest
-        - infosIntervention
         - message
         - natureTest
         - numeroTest
@@ -320,36 +339,42 @@ components:
         codeDO:
           description: Code opérateur Interop du donneur d'ordre
           maxLength: 4
+          minLength: 1
           type: string
         codeOI:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
+          minLength: 1
           type: string
         dateTest:
           description: ''
           type: string
           format: date-time
-        infosIntervention:
-          description: ''
-          type: array
-          items:
-            $ref: '#/components/schemas/InfoIntervention'
         message:
           description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         natureTest:
           description: ''
+          maxLength: 10
+          minLength: 1
           type: string
         numeroTest:
           description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         refIntervDO:
           description: Référence d'intervention unique produite par le donneur d'ordre et identique sur M1 et M3
           maxLength: 50
+          minLength: 1
           type: string
         refIntervOI:
           description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     DemanderTestIntermediaireInterventionDOOut:
       description: ''
@@ -357,62 +382,70 @@ components:
       required:
         - code
         - numeroTest
-        - refInterventionDO
+        - refIntervDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
           type: string
         numeroTest:
           description: ''
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
+        refIntervDO:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
-          type: string
-        refInterventionDO:
-          description: ''
-          type: string
-    InfoIntervention:
-      description: ''
-      type: object
-      properties:
-        refPbo:
-          description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
-          maxLength: 100
           type: string
     LigneImpacte:
       description: ''
       type: object
       properties:
+        numeroSerieONT:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
         refPTO:
           description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         referencePrestationPrise:
           description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         repaCodeOC:
           description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         repaOCDemandee:
           description: ''
-          type: string
+          type: boolean
         retMessage:
           description: ''
+          maxLength: 500
           type: string
         retStatut:
           description: ''
-          type: string
+          type: boolean
         retTypo:
           description: ''
-          type: string
-        serialNumberONT:
-          description: ''
+          maxLength: 500
           type: string
     LigneRetablie:
       description: ''
@@ -420,14 +453,18 @@ components:
       properties:
         refPTO:
           description: ''
-          type: array
-          items:
-            type: string
+          maxLength: 50
+          minLength: 1
+          type: string
         referencePrestationPrise:
           description: ''
+          maxLength: 30
+          minLength: 1
           type: string
         serialNumberONT:
           description: ''
+          maxLength: 50
+          minLength: 1
           type: string
     ModifierInterventionDO:
       description: ''
@@ -435,14 +472,14 @@ components:
       required:
         - codeDO
         - codeOI
-        - dateDebutIntevention
+        - dateDebutIntervention
         - dateFinIntervention
+        - dateTestFinFroid
         - elementReseau
         - message
         - nature
         - pointMutualisation
         - refIntervDO
-        - testFinFroid
       properties:
         codeDO:
           description: Code opérateur Interop du donneur d'ordre
@@ -452,12 +489,16 @@ components:
           description: Code opérateur Interop de l'opérateur d'infrastructure
           maxLength: 4
           type: string
-        dateDebutIntevention:
+        dateDebutIntervention:
           description: debut intervention
           type: string
           format: date-time
         dateFinIntervention:
           description: Valeur NULL si M1 Date/heure de fin réel d'intervention si M3 (format selon la norme ISO 8601)
+          type: string
+          format: date-time
+        dateTestFinFroid:
+          description: ''
           type: string
           format: date-time
         elementReseau:
@@ -469,6 +510,8 @@ components:
             - PTO
         message:
           description: ''
+          maxLength: 4
+          minLength: 1
           type: string
         nature:
           description: 'Nature finale de l''intervention, valeurs possibles : 1 = RACC PTO à construire 2 = RACC PTO existante 3 = RACC hotline 4 = SAV OC 5 = SAV OI 6 = NON FOURNIE (valeur possible permettant de rendre facultatif la fourniture de l''information)'
@@ -501,31 +544,34 @@ components:
           type: string
         referencePrestationPrise:
           description: ''
-          type: string
-        testFinFroid:
-          description: ''
+          maxLength: 30
+          minLength: 1
           type: string
     ModifierInterventionDOOut:
       description: ''
       type: object
       required:
         - code
-        - refInterventionDO
+        - refIntervDO
       properties:
         code:
           description: 0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU
+          maxLength: 2
+          minLength: 1
           type: integer
           format: int32
         description:
           description: Description de l'erreur
-          maxLength: 100
+          maxLength: 200
+          type: string
+        refIntervDO:
+          description: ''
+          maxLength: 50
+          minLength: 1
           type: string
         refIntervOI:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
-          type: string
-        refInterventionDO:
-          description: ''
           type: string
     PointMutualisation:
       description: ''
@@ -537,11 +583,41 @@ components:
         refPM:
           description: 'Référence réglementaire du PM (ex: FI-XXXXX-XXXX)'
           maxLength: 50
+          minLength: 1
           type: string
         refPMTechnique:
           description: C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.
+          maxLength: 50
+          minLength: 1
           type: string
-    ErrorResponse:
+    CompteRenduInterventionDO400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
+            - MAUVAIS_FORMAT
+            - REF_INTERV_INCONNUE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    CreerInterventionDO400Response:
       description: Description d'une erreur fonctionnelle
       type: object
       required:
@@ -555,11 +631,64 @@ components:
             - CODE_OI_INCONNU
             - MAUVAIS_FORMAT
             - PM_INCONNU
-            - REF_INTERV_INCONNUE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    DemanderTestIntermediaireInterventionDO400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
             - INCOHERENCE
+            - MAUVAIS_FORMAT
+            - REF_INTERV_INCONNUE
             - TEST_PRECEDENT_DEJA_EMIS
             - TEST_PRECEDENT_NON_ACQUITTE
+        error_description:
+          description: Description de l'erreur, si possible fixe pour un même code erreur
+          type: string
+          maxLength: 256
+        error_uri:
+          description: L'URI de description de l'erreur
+          type: string
+        error_parameters:
+          description: Les paramètres de l'erreur
+          type: array
+          items:
+            type: string
+            maxLength: 64
+    ModifierInterventionDO400Response:
+      description: Description d'une erreur fonctionnelle
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          description: Le code erreur permet de discriminer les différentes erreurs
+          type: string
+          enum:
+            - CHAMPS_NON_RENSEIGNE
+            - CODE_OI_INCONNU
             - M3TX_NON_DEMANDE
+            - MAUVAIS_FORMAT
+            - PM_INCONNU
         error_description:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
@@ -581,7 +710,7 @@ info:
   x-execution: api
   x-role: provider
   title: INTERVENTION-DO
-  version: 1.0.287
+  version: 1.0.310
   description: ''
   contact:
     name: MOE MSF
