@@ -1,53 +1,21 @@
 # E-Intervention
 
-## API de déclaration des interventions et de référencement des clients HS
-
-[Représentation de l'API](https://before-interop.github.io/E-Intervention/) au format OAS3
-
 Cette API est issue des travaux du groupe Interop'Fibre : https://www.interop-fibre.fr/
 
-### Rappel graphique des flux liés à l'API
+## Protocole de déclaration des interventions et de référencement des clients HS
 
-![Diagramme de séquencement Lot 2](Sequencement_flux_Lot_2.png)
+Le protocole E-Intervention à pour but de déclarer les interventions effectuées sur le réseau fibre avec un horodatage le plus fiable possible. Le croisement de ces informations permet de superviser les pannes sur les abonnés et de les imputer aux interventions correspondantes.
 
-### Rappel graphique des objets métier liés aux flux
+Le protocole possède 2 versions qui sont accessibles ci-après:
 
-#### Flux M1
+### [LOT 1](Lot_1/README.md)
 
-![CreerInterventionDO](/Images_objets_metiers/[PAR]%20CreerInterventionDO.svg)
+* le lot 1 correspond à la 1ère version, elle a permis d'instancier le protocole, de fiabiliser les horodatages et de mettre en place la capture des coupures harmonisées.
 
-#### Flux M2
+### [LOT 2](Lot_2/README.md)
 
-![CreerInterventionOI](/Images_objets_metiers/[PAR]%20CreerInterventionOI.svg)
+* le lot 2 correspond à la 2ème version, elle permet de mettre en place des tests en temps réel de la validité des lignes impactées par une intervention pour permettre à terme la réparation de lignes à chaud.
 
-#### Flux M3TX
+## Swagger
 
-![DemanderTestIntermediaireInterventionDO](/Images_objets_metiers/[PAR]%20DemanderTestIntermediaireInterventionDO.svg)
-
-#### Flux M4TX
-
-![DemanderTestIntermediaireInterventionOI](/Images_objets_metiers/[PAR]%20DemanderTestIntermediaireInterventionOI.svg)
-
-#### Flux M5TX
-
-![NotifierImpacteClientsOC](/Images_objets_metiers/[PAR]%20NotifierImpacteClientsOC.svg)
-
-#### Flux M6TX
-
-![NotifierImpacteClientsOIDO](/Images_objets_metiers/[PAR]%20NotifierImpacteClientsOIDO.svg)
-
-#### Flux M3
-
-![ModifierInterventionDO](/Images_objets_metiers/[PAR]%20ModifierInterventionDO.svg)
-
-#### Flux M3 Optionnel : Compte rendu d'intervention
-
-Partie DO :
-![ModifierInterventionDO](/Images_objets_metiers/[PAR]%20CompteRenduInterventionDO.svg)
-
-Partie OI:
-![ModifierInterventionDO](/Images_objets_metiers/[PAR]%20CompteRenduInterventionOI.svg)
-
-#### Flux M4
-
-![ModifierInterventionOI](/Images_objets_metiers/[PAR]%20ModifierInterventionOI.svg)
+La documentation de l'API est disponible à ce lien : [https://before-interop.github.io/E-Intervention/](https://before-interop.github.io/E-Intervention/)
