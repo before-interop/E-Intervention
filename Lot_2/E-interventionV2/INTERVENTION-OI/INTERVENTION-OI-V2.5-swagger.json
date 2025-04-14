@@ -1,0 +1,1614 @@
+{
+	"openapi": "3.0.2",
+	"servers": [
+		{
+			"url": "https://partner.api.bouyguestelecom.fr/v1",
+			"description": "Racine d'url des API PARTENAIRE en PRODUCTION"
+		}
+	],
+	"paths": {
+		"/interventions-oi": {
+			"post": {
+				"tags": [
+					"creerInterventionOI"
+				],
+				"summary": "Flux M2: Début d’intervention DO transmis par l’OI aux autres OCs presents au PM.",
+				"operationId": "creerInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"creerInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreerInterventionOI"
+							}
+						}
+					},
+					"description": "Objet intervention à déclarer chez l'OC",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreerInterventionOI400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			},
+			"put": {
+				"tags": [
+					"modifierInterventionOI"
+				],
+				"summary": "Flux 4:la fin de l'intervention notifier par l'OI",
+				"operationId": "modifierInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"modifierInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ModifierInterventionOI"
+							}
+						}
+					},
+					"description": "Objet intervention à déclarer chez l'OC",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModifierInterventionOI400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		},
+		"/interventions-oi/compte-rendu": {
+			"post": {
+				"tags": [
+					"compteRenduInterventionOI"
+				],
+				"summary": "Flux M4 :compte rendu de fin d'intervention relié par l'OI",
+				"operationId": "compteRenduInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"compteRenduInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CompteRenduInterventionOI"
+							}
+						}
+					},
+					"description": "Objet intervention à déclarer chez l'OC",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CompteRenduInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CompteRenduInterventionOI400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		},
+		"/interventions-oi/notification-impacte-clients-oc": {
+			"post": {
+				"tags": [
+					"notifierImpacteClientsOC"
+				],
+				"summary": "Flux M5TX: Impacts clients identifiés par l’OC",
+				"operationId": "notifierImpacteClientsOC",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"notifierImpacteClientsOC_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ClientImpacteOCParIntervention"
+							}
+						}
+					},
+					"description": "Liste des clients coupés lors d'une intervention donnée pour un opérateur commercial donné",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ClientImpacteParInterventionOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierImpacteClientsOC400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		},
+		"/interventions-oi/notification-impacte-clients-oi-do": {
+			"post": {
+				"tags": [
+					"notifierImpacteClientsOIDO"
+				],
+				"summary": "Flux M6TX:  Impacts clients relayés par l’OI au DO",
+				"operationId": "notifierImpacteClientsOIDO",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"notifierImpacteClientsOIDO_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/NotifierImpacteClientsOIDO"
+							}
+						}
+					},
+					"description": "Liste des clients coupés lors d'une intervention donnée pour un opérateur commercial donné",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierImpacteClientsOIDOOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotifierImpacteClientsOIDO400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		},
+		"/interventions-oi/test-intermediaire": {
+			"post": {
+				"tags": [
+					"demanderTestIntermediaireInterventionOI"
+				],
+				"summary": "Flux M4 Tx:Demande de test DO relayée par l’OI",
+				"operationId": "demanderTestIntermediaireInterventionOI",
+				"x-secured-access": "strict",
+				"security": [
+					{
+						"demanderTestIntermediaireInterventionOI_auth": [
+						]
+					}
+				],
+				"parameters": [
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DemanderTestIntermediaireInterventionOI"
+							}
+						}
+					},
+					"description": "Objet intervention à déclarer chez l'OI",
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DemanderTestIntermediaireInterventionOIOut"
+								}
+							}
+						},
+						"description": "Operation Successful"
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DemanderTestIntermediaireInterventionOI400Response"
+								}
+							}
+						}
+					}
+				},
+				"x-security-in": "IDENTITE_ET_GESTION",
+				"x-security-out": "IDENTITE_ET_GESTION"
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"compteRenduInterventionOI_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"creerInterventionOI_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"demanderTestIntermediaireInterventionOI_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"modifierInterventionOI_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"notifierImpacteClientsOC_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			},
+			"notifierImpacteClientsOIDO_auth": {
+				"type": "oauth2",
+				"x-habilitations": [
+				],
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "https://oauth2.bouyguestelecom.fr/authorize",
+						"scopes": {
+						}
+					}
+				}
+			}
+		},
+		"schemas": {
+			"ClientHSOC": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"dateChangementEtat",
+					"fibre",
+					"nomModulePM",
+					"positionCoupleurOC",
+					"positionModulePM",
+					"refPBO",
+					"refPTO",
+					"tube"
+				],
+				"properties": {
+					"couleurJarretiere": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"dateChangementEtat": {
+						"description": "Date/heure de début de coupure pour le client (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 20,
+						"type": "string"
+					},
+					"nomModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionCoupleurOC": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 20,
+						"type": "string"
+					}
+				}
+			},
+			"ClientHSOC1": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"dateChangementEtat",
+					"fibre",
+					"nomModulePM",
+					"positionCoupleurOC",
+					"positionModulePM",
+					"refPBO",
+					"refPTO",
+					"tube"
+				],
+				"properties": {
+					"couleurJarretiere": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"dateChangementEtat": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"nomModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionCoupleurOC": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"reserveReparationOI": {
+						"description": "",
+						"maxLength": 500,
+						"minLength": 1,
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"ClientImpacteOCParIntervention": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"clientHSOC",
+					"codeOcImpacte",
+					"ligneClientRetablie",
+					"message",
+					"refIntervOI",
+					"testCloture"
+				],
+				"properties": {
+					"clientHSOC": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ClientHSOC"
+						}
+					},
+					"codeOcImpacte": {
+						"description": "Code opérateur Interop de celui ayant des clients impactés",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"demandeReparation": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/DemandeReparation"
+						}
+					},
+					"ligneClientRetablie": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/LigneClientRetablie"
+						}
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l'OI",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"testCloture": {
+						"description": "",
+						"type": "boolean"
+					}
+				}
+			},
+			"ClientImpacteParInterventionOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"numeroTest",
+					"refIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"type": "string"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CompteRenduInterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOI",
+					"message",
+					"refIntervOI"
+				],
+				"properties": {
+					"codeOI": {
+						"description": "Code opérateur Interop de l'opérateur d'infrastructure",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"lignesImpactees": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/LigneImpacte"
+						}
+					},
+					"lignesRetablies": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/LigneRetablie"
+						}
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l�??OI dans R M1/R M3",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"CompteRenduInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"refIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU",
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"type": "string"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CreerInterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOI",
+					"dateDebutIntervention",
+					"message",
+					"refIntervOI",
+					"refPBO"
+				],
+				"properties": {
+					"codeOI": {
+						"description": "Code opérateur Interop de l'opérateur d'infrastructure",
+						"maxLength": 4,
+						"minLength": 4,
+						"type": "string"
+					},
+					"dateDebutIntervention": {
+						"description": "Date/heure de début réel d'intervention (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"description": "",
+						"maxLength": 200,
+						"minLength": 1,
+						"type": "string"
+					},
+					"elementReseau": {
+						"description": "",
+						"maxLength": 3,
+						"minLength": 1,
+						"type": "string"
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"pointMutualisation": {
+						"$ref": "#/components/schemas/PointMutualisation"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l�??OI dans R M1/R M3",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CreerInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"refIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"type": "string"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"DemandeReparation": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeDO"
+				],
+				"properties": {
+					"codeDO": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"reparation": {
+						"description": "",
+						"default": false,
+						"type": "boolean"
+					}
+				}
+			},
+			"DemanderTestIntermediaireInterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOI",
+					"dateTest",
+					"message",
+					"natureTest",
+					"numeroTest",
+					"refIntervOI"
+				],
+				"properties": {
+					"codeOI": {
+						"description": "Code opérateur Interop de l'opérateur d'infrastructure",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"dateTest": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"natureTest": {
+						"description": "",
+						"maxLength": 10,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"DemanderTestIntermediaireInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"numeroTest"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "Conditionnel: si Libelle_Reponse = OK Référence d'intervention unique produite par l'opérateur d'infrastructure",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"LigneClientRetablie": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"dateChangementEtat",
+					"fibre",
+					"nomModulePm",
+					"positionModulePM",
+					"refPBO",
+					"refPTO",
+					"tube"
+				],
+				"properties": {
+					"dateChangementEtat": {
+						"description": "Date/heure de début de coupure pour le client (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"nomModulePm": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"LigneClientRetablie1": {
+				"description": "Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l'heure de coupure est comprise dans l'intervalle",
+				"type": "object",
+				"required": [
+					"dateChangementEtat",
+					"fibre",
+					"nomModulePM",
+					"positionModulePM",
+					"refPBO",
+					"refPTO",
+					"referencePrestationPrise",
+					"tube"
+				],
+				"properties": {
+					"dateChangementEtat": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"fibre": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"nomModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"minLength": 1,
+						"type": "string"
+					},
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"positionModulePM": {
+						"description": "",
+						"maxLength": 256,
+						"type": "string"
+					},
+					"refPBO": {
+						"description": "",
+						"maxLength": 100,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"tube": {
+						"description": "",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"LigneImpacte": {
+				"description": "",
+				"type": "object",
+				"properties": {
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"repaCodeOC": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"repaOCDemandee": {
+						"description": "",
+						"type": "boolean"
+					},
+					"retMessage": {
+						"description": "",
+						"maxLength": 500,
+						"minLength": 1,
+						"type": "string"
+					},
+					"retStatut": {
+						"description": "",
+						"type": "boolean"
+					},
+					"retTypo": {
+						"description": "",
+						"maxLength": 500,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"LigneRetablie": {
+				"description": "",
+				"type": "object",
+				"properties": {
+					"numeroSerieONT": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"refPTO": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"referencePrestationPrise": {
+						"description": "",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"ModifierInterventionOI": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"codeOI",
+					"dateDebutIntervention",
+					"dateTestFinFroid",
+					"message",
+					"pointMutualisation",
+					"refIntervOI"
+				],
+				"properties": {
+					"codeOI": {
+						"description": "Code opérateur Interop de l'opérateur d'infrastructure",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"dateDebutIntervention": {
+						"description": "Date/heure de début réel d'intervention (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateFinIntervention": {
+						"description": "Valeur NULL si M2 Date/heure de fin réel d'intervention si M4 (format selon la norme ISO 8601)",
+						"type": "string",
+						"format": "date-time"
+					},
+					"dateTestFinFroid": {
+						"description": "",
+						"type": "string",
+						"format": "date-time"
+					},
+					"description": {
+						"description": "",
+						"type": "string"
+					},
+					"elementReseau": {
+						"description": "",
+						"maxLength": 3,
+						"minLength": 1,
+						"type": "string"
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"pointMutualisation": {
+						"$ref": "#/components/schemas/PointMutualisation1"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l�??OI dans R M1/R M3",
+						"maxLength": 50,
+						"type": "string"
+					}
+				}
+			},
+			"ModifierInterventionOIOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"refIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si CODE_OI_INCONNU 4 si PM_INCONNU",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"type": "string"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"NotifierImpacteClientsOIDO": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"clientHSOC",
+					"codeOCImpacte",
+					"ligneClientRetablie",
+					"message",
+					"multiInterventionOI",
+					"nombreOC",
+					"refIntervOI",
+					"reparation"
+				],
+				"properties": {
+					"clientHSOC": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ClientHSOC1"
+						}
+					},
+					"codeOCImpacte": {
+						"description": "Code opérateur Interop de celui ayant des clients impactés",
+						"maxLength": 4,
+						"type": "string"
+					},
+					"ligneClientRetablie": {
+						"description": "",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/LigneClientRetablie1"
+						}
+					},
+					"message": {
+						"description": "",
+						"maxLength": 4,
+						"minLength": 1,
+						"type": "string"
+					},
+					"multiInterventionOI": {
+						"description": "",
+						"type": "boolean"
+					},
+					"nombreOC": {
+						"description": "",
+						"type": "integer",
+						"format": "int32"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "Référence d�??intervention unique produite par l'OI",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"reparation": {
+						"description": "",
+						"type": "boolean"
+					}
+				}
+			},
+			"NotifierImpacteClientsOIDOOut": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"code",
+					"numeroTest",
+					"refIntervOI"
+				],
+				"properties": {
+					"code": {
+						"description": "0 si OK 1 si CHAMPS_NON_RENSEIGNE 2 si MAUVAIS_FORMAT 3 si REF_INTERV_OI_INCONNUE",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"description": "Description de l'erreur",
+						"maxLength": 200,
+						"type": "string"
+					},
+					"numeroTest": {
+						"description": "",
+						"maxLength": 2,
+						"minLength": 1,
+						"type": "integer",
+						"format": "int32"
+					},
+					"refIntervOI": {
+						"description": "",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					},
+					"reserve": {
+						"description": "",
+						"maxLength": 500,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"PointMutualisation": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"refPM",
+					"refPMTechnique"
+				],
+				"properties": {
+					"refPM": {
+						"description": "Référence réglementaire du PM (ex: FI-XXXXX-XXXX)",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"refPMTechnique": {
+						"description": "C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"PointMutualisation1": {
+				"description": "",
+				"type": "object",
+				"required": [
+					"refPM",
+					"refPMTechnique"
+				],
+				"properties": {
+					"refPM": {
+						"description": "Référence réglementaire du PM (ex: FI-XXXXX-XXXX)",
+						"maxLength": 50,
+						"type": "string"
+					},
+					"refPMTechnique": {
+						"description": "C'est la référence du PMTechnique dans le cas d'un regroupement de plusieurs PM Techniques rattachés à un PM. Ce champ permet à l'Oc d'identifier le PM Technique à raccorder (boitier, armoire...) au PBO.",
+						"maxLength": 50,
+						"minLength": 1,
+						"type": "string"
+					}
+				}
+			},
+			"CompteRenduInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"CODE_OI_INCONNU",
+							"INCOHERENCE",
+							"MAUVAIS_FORMAT",
+							"PM_INCONNU"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"CreerInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"CODE_OI_INCONNU",
+							"MAUVAIS_FORMAT",
+							"PM_INCONNU"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"DemanderTestIntermediaireInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"CODE_OI_INCONNU",
+							"INCOHERENCE",
+							"MAUVAIS_FORMAT",
+							"REF_INTERVOI_INCONNUE",
+							"TEST_NON_REALISE"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"ModifierInterventionOI400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"CODE_OI_INCONNU",
+							"INCOHERENCE",
+							"MAUVAIS_FORMAT",
+							"PM_INCONNU"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"NotifierImpacteClientsOC400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"DELAI_NON_RESPECTE",
+							"ERREUR_ITERATION",
+							"MAUVAIS_FORMAT",
+							"REF_INTERV_OI_INCONNUE"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			},
+			"NotifierImpacteClientsOIDO400Response": {
+				"description": "Description d'une erreur fonctionnelle",
+				"type": "object",
+				"required": [
+					"error"
+				],
+				"properties": {
+					"error": {
+						"description": "Le code erreur permet de discriminer les différentes erreurs",
+						"type": "string",
+						"enum": [
+							"CHAMPS_NON_RENSEIGNE",
+							"MAUVAIS_FORMAT",
+							"REF_INTERV_OI_INCONNUE"
+						]
+					},
+					"error_description": {
+						"description": "Description de l'erreur, si possible fixe pour un même code erreur",
+						"type": "string",
+						"maxLength": 256
+					},
+					"error_uri": {
+						"description": "L'URI de description de l'erreur",
+						"type": "string"
+					},
+					"error_parameters": {
+						"description": "Les paramètres de l'erreur",
+						"type": "array",
+						"items": {
+							"type": "string",
+							"maxLength": 64
+						}
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"x-objetmetier": "INTERVENTION-OI",
+		"x-sf": "",
+		"x-st": "MSF",
+		"x-type": "partenaire",
+		"x-execution": "api",
+		"x-role": "provider",
+		"title": "INTERVENTION-OI",
+		"version": "1.0.351",
+		"description": "",
+		"contact": {
+			"name": "MOE MSF"
+		}
+	},
+	"tags": [
+		{
+			"name": "demanderTestIntermediaireInterventionOI",
+			"description": "Flux M4 Tx:Demande de test DO relayée par l’OI"
+		},
+		{
+			"name": "modifierInterventionOI",
+			"description": "Flux 4:la fin de l'intervention notifier par l'OI"
+		},
+		{
+			"name": "creerInterventionOI",
+			"description": "Flux M2: Début d’intervention DO transmis par l’OI aux autres OCs presents au PM."
+		},
+		{
+			"name": "compteRenduInterventionOI",
+			"description": "Flux M4 :compte rendu de fin d'intervention relié par l'OI"
+		},
+		{
+			"name": "notifierImpacteClientsOC",
+			"description": "Flux M5TX: Impacts clients identifiés par l’OC"
+		},
+		{
+			"name": "notifierImpacteClientsOIDO",
+			"description": "Flux M6TX:  Impacts clients relayés par l’OI au DO"
+		}
+	]
+}
