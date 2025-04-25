@@ -6,4 +6,4 @@
 
 ### Rappel graphique des flux liés à l'API
 
-![Diagramme de séquencement Lot 2](Sequencement_flux_lot_1.png)
+![Diagramme de séquencement Lot 1](Sequencement_flux_lot_1.png)

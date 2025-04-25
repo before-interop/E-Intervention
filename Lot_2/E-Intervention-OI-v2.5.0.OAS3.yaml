@@ -40,7 +40,7 @@ paths:
     put:
       tags:
         - modifierInterventionOI
-      summary: "Flux M4: la fin de l'intervention notifiée par l'OI"
+      summary: "Flux 4: la fin de l'intervention notifiée par l'OI"
       operationId: modifierInterventionOI
       x-secured-access: strict
       security:
@@ -72,7 +72,7 @@ paths:
     post:
       tags:
         - compteRenduInterventionOI
-      summary: "Flux M4 optionnel: compte rendu de fin d'intervention relayé par l'OI"
+      summary: Flux M4 :compte rendu de fin d'intervention relayé par l'OI
       operationId: compteRenduInterventionOI
       x-secured-access: strict
       security:
@@ -168,7 +168,7 @@ paths:
     post:
       tags:
         - demanderTestIntermediaireInterventionOI
-      summary: "Flux M4TX: Demande de test DO relayée par l’OI"
+      summary: Flux M4 Tx:Demande de test DO relayée par l’OI
       operationId: demanderTestIntermediaireInterventionOI
       x-secured-access: strict
       security:
@@ -361,11 +361,9 @@ components:
           maxLength: 30
           minLength: 1
           type: string
-        reserve:
+        reserveReparationOI:
           description: ''
-          maxLength: 500
-          minLength: 1
-          type: string
+          type: boolean
         tube:
           description: ''
           maxLength: 50
@@ -390,7 +388,7 @@ components:
           description: Code opérateur Interop de celui ayant des clients impactés
           maxLength: 4
           type: string
-        demandeReapartion:
+        demandeReparation:
           description: ''
           type: array
           items:
@@ -796,7 +794,7 @@ components:
       description: ''
       type: object
       properties:
-        '-numeroSerieONT':
+        numeroSerieONT:
           description: ''
           maxLength: 50
           minLength: 1
@@ -1171,23 +1169,25 @@ info:
   x-execution: api
   x-role: provider
   title: INTERVENTION-OI
-  version: 1.0.310
-  description: ''
-  contact:
-    name: MOE MSF
+  version: '2.5'
+  description: "Partie OI vers OC de l'API"
+  contact: 
+    name: "Github repository"
+    url: "https://github.com/before-interop/E-Intervention"
 tags:
   - name: demanderTestIntermediaireInterventionOI
-    description: "Flux M4TX: Demande de test DO relayée par l’OI"
+    description: "Flux M4 Tx: Demande de test DO relayée par l’OI"
   - name: modifierInterventionOI
     description: "Flux M4: la fin de l'intervention notifiée par l'OI"
   - name: creerInterventionOI
-    description: "Flux M2 : Début d’intervention DO transmis par l’OI aux autres OCs presents au PM."
+    description: 'Flux M2: Début d’intervention DO transmis par l’OI aux autres OCs presents au PM.'
   - name: compteRenduInterventionOI
-    description: "Flux M4 optionnel: compte rendu de fin d'intervention relayé par l'OI"
+    description: "Flux M4: compte rendu de fin d'intervention relayé par l'OI"
   - name: notifierImpacteClientsOC
-    description: "Flux M5TX: Impacts clients identifiés par l’OC"
+    description: 'Flux M5TX: Impacts clients identifiés par l’OC'
   - name: notifierImpacteClientsOIDO
-    description: "Flux M6TX:  Impacts clients relayés par l’OI au DO"
+    description: 'Flux M6TX:  Impacts clients relayés par l’OI au DO'
+
 externalDocs:
   description: "Groupe Interop'Fibre"
   url: "https://www.interop-fibre.fr/"

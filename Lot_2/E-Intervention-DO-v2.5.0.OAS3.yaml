@@ -70,7 +70,7 @@ paths:
     post:
       tags:
         - compteRenduInterventionDO
-      summary: 'Flux M3 optionnel: Compte rendu de fin d''intervention qui intervient juste après l''envoi du  M3.'
+      summary: Compte rendu de fin d'intervention qui intervient juste aprés l'envoi du  M3.
       operationId: compteRenduInterventionDO
       x-secured-access: strict
       security:
@@ -451,6 +451,11 @@ components:
       description: ''
       type: object
       properties:
+        numeroSerieONT:
+          description: ''
+          maxLength: 50
+          minLength: 1
+          type: string
         refPTO:
           description: ''
           maxLength: 50
@@ -461,11 +466,6 @@ components:
           maxLength: 30
           minLength: 1
           type: string
-        serialNumberONT:
-          description: ''
-          maxLength: 50
-          minLength: 1
-          type: string
     ModifierInterventionDO:
       description: ''
       type: object
@@ -474,7 +474,6 @@ components:
         - codeOI
         - dateDebutIntervention
         - dateFinIntervention
-        - dateTestFinFroid
         - elementReseau
         - message
         - nature
@@ -495,10 +494,6 @@ components:
           format: date-time
         dateFinIntervention:
           description: Valeur NULL si M1 Date/heure de fin réel d'intervention si M3 (format selon la norme ISO 8601)
-          type: string
-          format: date-time
-        dateTestFinFroid:
-          description: ''
           type: string
           format: date-time
         elementReseau:
@@ -710,15 +705,16 @@ info:
   x-execution: api
   x-role: provider
   title: INTERVENTION-DO
-  version: 1.0.310
-  description: ''
-  contact:
-    name: MOE MSF
+  version: '2.5'
+  description: "Partie DO vers OI de l'implémentation de l'API."
+  contact: 
+    name: "Github repository"
+    url: "https://github.com/before-interop/E-Intervention"
 tags:
   - name: creerInterventionDO
     description: 'Flux M1: Message transmis par le DO à l’OI pour notifier le début d’intervention.'
   - name: compteRenduInterventionDO
-    description: 'Flux M3 optionel: Compte rendu de fin d''intervention DO'
+    description: "Flux M3 (Facultatif): Compte rendu de fin d'intervention qui intervient juste aprés l'envoi du  M3."
   - name: demanderTestIntermediaireInterventionDO
     description: 'Flux M3TX: demande de test intermediaire'
   - name: modifierInterventionDO
