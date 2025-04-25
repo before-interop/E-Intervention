@@ -163,7 +163,7 @@
 				"tags": [
 					"demanderTestIntermediaireInterventionDO"
 				],
-				"summary": "Flux M3TX: demande de test intermediare",
+				"summary": "Flux M3TX: demande de test intermediaire",
 				"operationId": "demanderTestIntermediaireInterventionDO",
 				"x-secured-access": "strict",
 				"security": [
