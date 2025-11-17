@@ -38,7 +38,7 @@
 
 ![ModifierInterventionDO](E-interventionV2/INTERVENTION-DO/modifierInterventionDO/diagrammes/[PAR]%20ModifierInterventionDO.svg)
 
-#### Flux M3 Optionnel : Compte rendu d'intervention
+#### Flux M3CR Optionnel : Compte rendu d'intervention
 
 Partie DO :
 ![ModifierInterventionDO](E-interventionV2/INTERVENTION-DO/compteRenduInterventionDO/diagrammes/[PAR]%20CompteRenduInterventionDO.svg)

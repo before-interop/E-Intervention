@@ -706,7 +706,14 @@ info:
   x-role: provider
   title: INTERVENTION-DO
   version: '2.5'
-  description: "Partie DO vers OI de l'implémentation de l'API."
+  description: |
+    # Partie DO vers OI de l'implémentation de l'API
+      
+    ## Règles d'implémentation
+    
+    Les champs définis comme "Booléen" dans la spécification sont attendus avec les valeurs "true|false".  
+      
+    # Liens
   contact: 
     name: "Github repository"
     url: "https://github.com/before-interop/E-Intervention"

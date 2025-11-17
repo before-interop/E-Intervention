@@ -1170,7 +1170,14 @@ info:
   x-role: provider
   title: INTERVENTION-OI
   version: '2.5'
-  description: "Partie OI vers OC de l'API"
+  description: |
+    # Partie OI vers OC de l'implémentation de l'API
+      
+    ## Règles d'implémentation
+    
+    Les champs définis comme "Booléen" dans la spécification sont attendus avec les valeurs "true|false".  
+      
+    # Liens
   contact: 
     name: "Github repository"
     url: "https://github.com/before-interop/E-Intervention"
