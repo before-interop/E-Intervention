@@ -259,6 +259,7 @@ components:
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         dateChangementEtat:
           description: Date/heure de début de coupure pour le client (format selon la norme ISO 8601)
           type: string
@@ -277,6 +278,7 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         positionCoupleurOC:
           description: ''
           maxLength: 256
@@ -299,6 +301,7 @@ components:
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         tube:
           description: ''
           maxLength: 20
@@ -321,6 +324,7 @@ components:
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         dateChangementEtat:
           description: ''
           type: string
@@ -339,6 +343,7 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         positionCoupleurOC:
           description: ''
           maxLength: 256
@@ -361,9 +366,11 @@ components:
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         reserveReparationOI:
           description: ''
           type: boolean
+          nullable: true
         tube:
           description: ''
           maxLength: 50
@@ -391,6 +398,7 @@ components:
         demandeReparation:
           description: ''
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/DemandeReparation'
         ligneClientRetablie:
@@ -409,6 +417,7 @@ components:
           minLength: 1
           type: integer
           format: int32
+          nullable: true
         refIntervOI:
           description: Référence d�??intervention unique produite par l'OI
           maxLength: 50
@@ -434,6 +443,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         numeroTest:
           description: ''
           maxLength: 2
@@ -460,11 +470,13 @@ components:
         lignesImpactees:
           description: ''
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/LigneImpacte'
         lignesRetablies:
           description: ''
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/LigneRetablie'
         message:
@@ -491,6 +503,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervOI:
           description: ''
           maxLength: 50
@@ -520,11 +533,13 @@ components:
           maxLength: 200
           minLength: 1
           type: string
+          nullable: true
         elementReseau:
           description: ''
           maxLength: 3
           minLength: 1
           type: string
+          nullable: true
         message:
           description: ''
           maxLength: 4
@@ -559,6 +574,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervOI:
           description: ''
           maxLength: 50
@@ -579,6 +595,7 @@ components:
           description: ''
           default: false
           type: boolean
+          nullable: true
     DemanderTestIntermediaireInterventionOI:
       description: ''
       type: object
@@ -637,6 +654,7 @@ components:
           maxLength: 200
           minLength: 1
           type: string
+          nullable: true
         numeroTest:
           description: ''
           maxLength: 2
@@ -647,6 +665,7 @@ components:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
+          nullable: true
     LigneClientRetablie:
       description: 'Conditionnel : au moins 1 client KO Liste des routes optiques de chaque client HS au PM dont l''heure de coupure est comprise dans l''intervalle'
       type: object
@@ -677,6 +696,7 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         positionModulePM:
           description: ''
           maxLength: 100
@@ -694,6 +714,7 @@ components:
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         tube:
           description: ''
           maxLength: 50
@@ -729,6 +750,7 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         positionModulePM:
           description: ''
           maxLength: 256
@@ -759,37 +781,45 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         refPTO:
           description: ''
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         repaCodeOC:
           description: ''
           maxLength: 4
           minLength: 1
           type: string
+          nullable: true
         repaOCDemandee:
           description: ''
           type: boolean
+          nullable: true
         retMessage:
           description: ''
           maxLength: 500
           minLength: 1
           type: string
+          nullable: true
         retStatut:
           description: ''
           type: boolean
+          nullable: true
         retTypo:
           description: ''
           maxLength: 500
           minLength: 1
           type: string
+          nullable: true
     LigneRetablie:
       description: ''
       type: object
@@ -799,16 +829,19 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         refPTO:
           description: ''
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
     ModifierInterventionOI:
       description: ''
       type: object
@@ -832,6 +865,7 @@ components:
           description: Valeur NULL si M2 Date/heure de fin réel d'intervention si M4 (format selon la norme ISO 8601)
           type: string
           format: date-time
+          nullable: true
         dateTestFinFroid:
           description: ''
           type: string
@@ -839,11 +873,13 @@ components:
         description:
           description: ''
           type: string
+          nullable: true
         elementReseau:
           description: ''
           maxLength: 3
           minLength: 1
           type: string
+          nullable: true
         message:
           description: ''
           maxLength: 4
@@ -872,6 +908,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervOI:
           description: ''
           maxLength: 50
@@ -922,6 +959,7 @@ components:
           minLength: 1
           type: integer
           format: int32
+          nullable: true
         refIntervOI:
           description: Référence d�??intervention unique produite par l'OI
           maxLength: 50
@@ -947,6 +985,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         numeroTest:
           description: ''
           maxLength: 2
@@ -963,9 +1002,11 @@ components:
           maxLength: 500
           minLength: 1
           type: string
+          nullable: true
     PointMutualisation:
       description: ''
       type: object
+      nullable: true
       required:
         - refPM
         - refPMTechnique
@@ -1014,12 +1055,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1041,12 +1085,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1070,12 +1117,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1098,12 +1148,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1126,12 +1179,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1152,12 +1208,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -1169,7 +1228,7 @@ info:
   x-execution: api
   x-role: provider
   title: INTERVENTION-OI
-  version: '2.5'
+  version: '2.5.0'
   description: "Partie OI vers OC de l'API"
   contact: 
     name: "Github repository"

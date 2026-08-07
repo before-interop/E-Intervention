@@ -4,6 +4,15 @@
 
 ### [Swagger disponible par ici](https://before-interop.github.io/E-Intervention/) au format OAS3
 
+## Version des spécifications
+
+Les spécifications YAML du Lot 2 utilisent la version fonctionnelle `2.5.0` et le format OpenAPI `3.0.2` :
+
+- [INTERVENTION-DO v2.5.0](E-Intervention-DO-v2.5.0.OAS3.yaml)
+- [INTERVENTION-OI v2.5.0](E-Intervention-OI-v2.5.0.OAS3.yaml)
+
+Dans cette version, les champs absents de `required` acceptent explicitement la valeur `null` : 42 champs pour INTERVENTION-DO et 59 pour INTERVENTION-OI, soit 17 champs supplémentaires côté OI. Ce correctif concerne exclusivement les deux spécifications YAML.
+
 ### Rappel graphique des flux liés à l'API
 
 ![Diagramme de séquencement Lot 2](Sequencement_flux_Lot_2.png)
