@@ -174,11 +174,13 @@ components:
         lignesImpactees:
           description: ''
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/LigneImpacte'
         lignesRetablies:
           description: ''
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/LigneRetablie'
         message:
@@ -195,6 +197,7 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
     CompteRenduInterventionDOOut:
       description: ''
       type: object
@@ -212,6 +215,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervDO:
           description: ''
           maxLength: 50
@@ -221,6 +225,7 @@ components:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
+          nullable: true
     CreerInterventionDO:
       description: ''
       type: object
@@ -249,13 +254,16 @@ components:
           description: Valeur NULL si M1 Date/heure de fin réel d'intervention si M3 (format selon la norme ISO 8601)
           type: string
           format: date-time
+          nullable: true
         elementReseau:
           description: ''
           type: string
+          nullable: true
           enum:
             - PBO
             - PM
             - PTO
+            - null
         message:
           description: ''
           maxLength: 4
@@ -287,16 +295,19 @@ components:
           maxLength: 100
           minLength: 1
           type: string
+          nullable: true
         refPTO:
           description: 'Référence PTO (Ex: FI-YYYY-YYYY) si disponible Réference prise (protocole interop)'
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
     CreerInterventionDOOut:
       description: ''
       type: object
@@ -314,6 +325,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervDO:
           description: ''
           maxLength: 50
@@ -323,6 +335,7 @@ components:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
+          nullable: true
     DemanderTestIntermediaireInterventionDO:
       description: ''
       type: object
@@ -394,6 +407,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         numeroTest:
           description: ''
           maxLength: 2
@@ -409,6 +423,7 @@ components:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
+          nullable: true
     LigneImpacte:
       description: ''
       type: object
@@ -418,35 +433,43 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         refPTO:
           description: ''
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
         repaCodeOC:
           description: ''
           maxLength: 4
           minLength: 1
           type: string
+          nullable: true
         repaOCDemandee:
           description: ''
           type: boolean
+          nullable: true
         retMessage:
           description: ''
           maxLength: 500
           type: string
+          nullable: true
         retStatut:
           description: ''
           type: boolean
+          nullable: true
         retTypo:
           description: ''
           maxLength: 500
           type: string
+          nullable: true
     LigneRetablie:
       description: ''
       type: object
@@ -456,16 +479,19 @@ components:
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         refPTO:
           description: ''
           maxLength: 50
           minLength: 1
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
     ModifierInterventionDO:
       description: ''
       type: object
@@ -533,15 +559,18 @@ components:
           description: 'Référence PBO (Ex: PTXXXXXXX) si disponible'
           maxLength: 100
           type: string
+          nullable: true
         refPTO:
           description: 'Référence PTO (Ex: FI-YYYY-YYYY) si disponible Réference prise (protocole interop)'
           maxLength: 50
           type: string
+          nullable: true
         referencePrestationPrise:
           description: ''
           maxLength: 30
           minLength: 1
           type: string
+          nullable: true
     ModifierInterventionDOOut:
       description: ''
       type: object
@@ -559,6 +588,7 @@ components:
           description: Description de l'erreur
           maxLength: 200
           type: string
+          nullable: true
         refIntervDO:
           description: ''
           maxLength: 50
@@ -568,6 +598,7 @@ components:
           description: 'Conditionnel: si Libelle_Reponse = OK Référence d''intervention unique produite par l''opérateur d''infrastructure'
           maxLength: 50
           type: string
+          nullable: true
     PointMutualisation:
       description: ''
       type: object
@@ -603,12 +634,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -630,12 +664,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -660,12 +697,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -688,12 +728,15 @@ components:
           description: Description de l'erreur, si possible fixe pour un même code erreur
           type: string
           maxLength: 256
+          nullable: true
         error_uri:
           description: L'URI de description de l'erreur
           type: string
+          nullable: true
         error_parameters:
           description: Les paramètres de l'erreur
           type: array
+          nullable: true
           items:
             type: string
             maxLength: 64
@@ -705,7 +748,7 @@ info:
   x-execution: api
   x-role: provider
   title: INTERVENTION-DO
-  version: '2.5'
+  version: '2.5.0'
   description: "Partie DO vers OI de l'implémentation de l'API."
   contact: 
     name: "Github repository"
