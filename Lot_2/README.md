@@ -11,7 +11,7 @@ Les spécifications YAML du Lot 2 utilisent la version fonctionnelle `2.5.0` et 
 - [INTERVENTION-DO v2.5.0](E-Intervention-DO-v2.5.0.OAS3.yaml)
 - [INTERVENTION-OI v2.5.0](E-Intervention-OI-v2.5.0.OAS3.yaml)
 
-Dans cette version, les champs absents de `required` acceptent explicitement la valeur `null` : 42 champs pour INTERVENTION-DO et 59 pour INTERVENTION-OI, soit 17 champs supplémentaires côté OI. Ce correctif concerne exclusivement les deux spécifications YAML.
+Dans cette version, les champs absents de `required` acceptent explicitement la valeur `null` : 43 champs pour INTERVENTION-DO et 59 pour INTERVENTION-OI, soit 16 champs supplémentaires côté OI. Ce correctif concerne exclusivement les deux spécifications YAML.
 
 ### Rappel graphique des flux liés à l'API
 
