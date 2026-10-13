@@ -500,7 +500,6 @@ components:
         - codeOI
         - dateDebutIntervention
         - dateFinIntervention
-        - elementReseau
         - message
         - nature
         - pointMutualisation
@@ -525,10 +524,12 @@ components:
         elementReseau:
           description: ''
           type: string
+          nullable: true
           enum:
             - PBO
             - PM
             - PTO
+            - null
         message:
           description: ''
           maxLength: 4
